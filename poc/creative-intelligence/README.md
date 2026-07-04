@@ -28,8 +28,8 @@ npm run validate:runtime  # drives the running app with Playwright (needs dev/st
 |---|---|---|
 | 1 | Research Hub (+ scaffold, domain, scoring, fixtures) | ✅ approved |
 | 2 | Trend Radar (feed, filters, decisions, learning signals) | ✅ approved |
-| 3 | Opportunity Detail (permanent evidence page, section registry) | ✅ this iteration |
-| 4 | AI Analysis (Claude adapter + fixture fallback) | — |
+| 3 | Opportunity Detail (permanent evidence page, section registry) | ✅ approved |
+| 4 | Deep AI Analysis (Claude adapter + fixture fallback, gated + cached) | ✅ this iteration |
 | 5 | Brief Editor | — |
 | 6 | Meeting Mode | — |
 | 7 | Planner hand-off stub + integration adapters | — |

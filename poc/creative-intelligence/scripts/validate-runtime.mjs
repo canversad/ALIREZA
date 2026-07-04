@@ -306,7 +306,7 @@ try {
   const plannerText = (await page.locator('[data-testid="section-planner"]').textContent()) ?? "";
   check("planner linkage shows honest not-planned state", plannerText.includes("Not planned yet"));
   check(
-    "AI analysis is a placeholder section (engine = Iteration 4)",
+    "AI analysis section present, run gated pre-shortlist",
     (await page.locator('[data-testid="run-analysis"]').isDisabled()) === true,
   );
 
@@ -338,6 +338,62 @@ try {
 
   await page.goto(`${BASE_URL}/opportunity/${encodeURIComponent(topInbox.id)}`, { waitUntil: "networkidle" });
   await page.screenshot({ path: path.join(OUT_DIR, "detail-desktop.png"), fullPage: true });
+
+  // ============ Iteration 4: Deep AI Analysis ============
+  // Gate A1: on a discovered (not shortlisted) opportunity the Run button is disabled
+  const gatedBtn = page.locator('[data-testid="run-analysis"]');
+  check(
+    "analysis gated on discovered opp (shortlist first)",
+    (await gatedBtn.isDisabled()) && ((await gatedBtn.textContent()) ?? "").includes("shortlist first"),
+  );
+
+  // On the shortlisted opportunity: run analysis (fixture engine — no API key in env)
+  await page.goto(`${BASE_URL}/opportunity/${encodeURIComponent(shortId)}`, { waitUntil: "networkidle" });
+  const runBtn = page.locator('[data-testid="run-analysis"]');
+  check("run button enabled on shortlisted opp", !(await runBtn.isDisabled()));
+  await runBtn.click();
+  await page.waitForSelector('[data-testid="analysis-result"]', { timeout: 30_000 });
+  check("analysis result renders after run", true);
+
+  const analysisText = (await page.locator('[data-testid="analysis-result"]').textContent()) ?? "";
+  check(
+    "analysis has verdict + confidence + all narrative sections",
+    (await page.locator('[data-testid="analysis-verdict"]').count()) === 1 &&
+      analysisText.includes("confidence:") &&
+      analysisText.includes("Why it went viral") &&
+      analysisText.includes("transferable pattern") &&
+      analysisText.includes("Watch out"),
+  );
+  const engineBadge = (await page.locator('[data-testid="analysis-engine"]').textContent()) ?? "";
+  check("engine provenance shown (fixture engine, honestly labeled)", engineBadge.includes("fixture-engine"), engineBadge.trim().slice(0, 60));
+
+  // Persistence: DB has the analysis, state advanced shortlisted → analyzed
+  const dbAnalyzed = db
+    .prepare("SELECT state, analysis_json FROM opportunities WHERE id = ?")
+    .get(shortId);
+  check("analysis cached in DB", dbAnalyzed?.analysis_json != null && JSON.parse(dbAnalyzed.analysis_json).verdict != null);
+  check("state advanced to analyzed", dbAnalyzed?.state === "analyzed", `state=${dbAnalyzed?.state}`);
+
+  // Cache survives reload — analysis renders with no Run button
+  await page.goto(`${BASE_URL}/opportunity/${encodeURIComponent(shortId)}`, { waitUntil: "networkidle" });
+  check(
+    "cached analysis renders on reload (no re-run offered)",
+    (await page.locator('[data-testid="analysis-result"]').count()) === 1 &&
+      (await page.locator('[data-testid="run-analysis"]').count()) === 0,
+  );
+  const decisionsAfter = (await page.locator('[data-testid="section-decisions"]').textContent()) ?? "";
+  check("decision history records shortlisted → analyzed", decisionsAfter.includes("shortlisted → analyzed"));
+  await page.screenshot({ path: path.join(OUT_DIR, "analysis-desktop.png"), fullPage: true });
+
+  // Analyzed items stay visible in the Shortlisted tab; hub pipeline updates
+  await page.goto(`${BASE_URL}/radar/${clientId}?tab=shortlisted`, { waitUntil: "networkidle" });
+  const analyzedInTab = await page
+    .locator('[data-testid="opportunity-card"][data-state="analyzed"]')
+    .count();
+  check("analyzed card remains in Shortlisted tab", analyzedInTab === 1, `count=${analyzedInTab}`);
+  await page.goto(`${BASE_URL}/hub/${clientId}`, { waitUntil: "networkidle" });
+  const hubAnalyzed = await page.textContent('[data-testid="pipeline-analyzed"]');
+  check("hub pipeline shows 1 analyzed", hubAnalyzed?.trim() === "1", `chip=${hubAnalyzed}`);
 
   // Narrow viewport
   await page.setViewportSize({ width: 420, height: 900 });

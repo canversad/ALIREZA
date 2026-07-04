@@ -9,11 +9,14 @@ import type {
   BrandDNA,
   ClientProfile,
   Opportunity,
+  OpportunityAnalysis,
   OpportunityState,
   PublishedContent,
   Rejection,
   VideoEvidence,
 } from "../domain/types";
+
+export type { OpportunityAnalysis } from "../domain/types";
 
 /** A source of harvested candidate videos (fixture now; ScrapeCreators/YouTube later). */
 export interface DiscoveryProvider {
@@ -24,24 +27,14 @@ export interface DiscoveryProvider {
   }): Promise<VideoEvidence[]>;
 }
 
-/** Deep AI analysis engine (Iteration 4: Claude adapter + fixture fallback). */
+/** Deep AI analysis engine (Claude adapter with fixture fallback). */
 export interface AnalysisEngine {
   readonly id: string;
   analyze(input: {
     opportunity: Opportunity;
     brandDna: BrandDNA;
+    client: ClientProfile;
   }): Promise<OpportunityAnalysis>;
-}
-
-export interface OpportunityAnalysis {
-  whyItWorked: string;
-  transferablePattern: string;
-  adaptationAngles: { angle: string; brandTrait: string; effort: "low" | "medium" | "high" }[];
-  watchOuts: string[];
-  verdict: "strong-adapt" | "possible-adapt" | "skip";
-  confidence: "high" | "medium" | "low";
-  generatedBy: string; // engine id + model
-  generatedAt: string;
 }
 
 export interface OpportunityRepository {
@@ -54,6 +47,7 @@ export interface OpportunityRepository {
     by: string,
     options?: { note?: string; rejection?: Rejection },
   ): Promise<Opportunity>;
+  setAnalysis(id: string, analysis: OpportunityAnalysis): Promise<Opportunity>;
   countByState(clientId: string): Promise<Record<OpportunityState, number>>;
   countCreatedSince(clientId: string, sinceIso: string): Promise<number>;
   isEmpty(): Promise<boolean>;

@@ -26,7 +26,8 @@ export function getDb(): DatabaseSync {
       created_at TEXT NOT NULL,
       updated_at TEXT NOT NULL,
       state_history_json TEXT NOT NULL,
-      rejection_json TEXT
+      rejection_json TEXT,
+      analysis_json TEXT
     );
     CREATE INDEX IF NOT EXISTS idx_opps_client_state ON opportunities (client_id, state);
     CREATE TABLE IF NOT EXISTS kb_decisions (
@@ -39,6 +40,12 @@ export function getDb(): DatabaseSync {
       at TEXT NOT NULL
     );
   `);
+  // Migration for stores created before Iteration 4
+  try {
+    db.exec("ALTER TABLE opportunities ADD COLUMN analysis_json TEXT");
+  } catch {
+    // column already exists
+  }
   return db;
 }
 

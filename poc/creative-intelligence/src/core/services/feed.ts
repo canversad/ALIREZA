@@ -75,7 +75,8 @@ export interface FeedItem {
 
 const TAB_STATES: Record<RadarTab, (state: Opportunity["state"]) => boolean> = {
   inbox: (s) => s === "discovered",
-  shortlisted: (s) => s === "shortlisted",
+  // "Shortlisted" = everything the strategist kept (analysis doesn't remove it)
+  shortlisted: (s) => s === "shortlisted" || s === "analyzed",
   rejected: (s) => s === "rejected",
   all: () => true,
 };

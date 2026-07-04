@@ -118,6 +118,21 @@ export type RejectionReason =
   | "client-passed"
   | "other";
 
+/**
+ * Deep AI analysis result — generated once on explicit request (Tier 2),
+ * then cached permanently on the opportunity.
+ */
+export interface OpportunityAnalysis {
+  whyItWorked: string;
+  transferablePattern: string;
+  adaptationAngles: { angle: string; brandTrait: string; effort: "low" | "medium" | "high" }[];
+  watchOuts: string[];
+  verdict: "strong-adapt" | "possible-adapt" | "skip";
+  confidence: "high" | "medium" | "low";
+  generatedBy: string; // engine id + model
+  generatedAt: string;
+}
+
 export interface Opportunity {
   id: string;
   clientId: string;
@@ -130,6 +145,8 @@ export interface Opportunity {
   updatedAt: string;
   stateHistory: StateTransition[];
   rejection?: Rejection;
+  /** Cached deep analysis (never regenerated silently). */
+  analysis?: OpportunityAnalysis;
 }
 
 export interface ClientProfile {

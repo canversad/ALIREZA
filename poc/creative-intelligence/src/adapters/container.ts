@@ -4,6 +4,7 @@
  * (documented in README; `npm run seed -- --reset` forces a fresh seed).
  */
 import type {
+  AnalysisEngine,
   BrandDNAPort,
   ClientPort,
   DiscoveryProvider,
@@ -11,6 +12,8 @@ import type {
   OpportunityRepository,
   PublishedContentPort,
 } from "@/core/ports";
+import { ClaudeAnalysisEngine } from "./analysis/claude";
+import { FixtureAnalysisEngine } from "./analysis/fixture";
 import { getDb } from "./sqlite/db";
 import { SqliteOpportunityRepository } from "./sqlite/opportunity-repo";
 import { SqliteKnowledgeBase } from "./sqlite/knowledge-base";
@@ -29,6 +32,7 @@ export interface Container {
   discovery: DiscoveryProvider;
   knowledgeBase: KnowledgeBasePort;
   publishedContent: PublishedContentPort;
+  analysis: AnalysisEngine;
 }
 
 let container: Container | null = null;
@@ -44,6 +48,10 @@ export function getContainer(): Container {
       discovery: new FixtureDiscoveryProvider(),
       knowledgeBase: new SqliteKnowledgeBase(db),
       publishedContent: new FixturePublishedContentPort(),
+      // Real engine only when a key is configured — the app never hard-fails without one.
+      analysis: process.env.ANTHROPIC_API_KEY
+        ? new ClaudeAnalysisEngine()
+        : new FixtureAnalysisEngine(),
     };
   }
   return container;

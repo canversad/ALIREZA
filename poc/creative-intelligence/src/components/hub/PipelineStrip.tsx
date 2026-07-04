@@ -5,6 +5,7 @@ import type { HubDigest } from "@/core/services/digest";
 const STAGE_LINKS: Record<string, string> = {
   discovered: "inbox",
   shortlisted: "shortlisted",
+  analyzed: "shortlisted",
 };
 
 const STAGE_LABELS: Record<string, string> = {

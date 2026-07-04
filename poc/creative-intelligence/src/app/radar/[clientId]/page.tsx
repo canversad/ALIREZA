@@ -43,7 +43,7 @@ export default async function TrendRadar({
 
   const tabCounts: Record<RadarTab, number> = {
     inbox: all.filter((o) => o.state === "discovered").length,
-    shortlisted: all.filter((o) => o.state === "shortlisted").length,
+    shortlisted: all.filter((o) => o.state === "shortlisted" || o.state === "analyzed").length,
     rejected: rejected.length,
     all: all.length,
   };

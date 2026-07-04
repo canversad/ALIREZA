@@ -1,6 +1,7 @@
 import type { DatabaseSync } from "node:sqlite";
 import type {
   Opportunity,
+  OpportunityAnalysis,
   OpportunityState,
   Rejection,
 } from "@/core/domain/types";
@@ -19,6 +20,7 @@ interface Row {
   updated_at: string;
   state_history_json: string;
   rejection_json: string | null;
+  analysis_json: string | null;
 }
 
 function rowToOpportunity(row: Row): Opportunity {
@@ -34,6 +36,7 @@ function rowToOpportunity(row: Row): Opportunity {
     updatedAt: row.updated_at,
     stateHistory: JSON.parse(row.state_history_json),
     rejection: row.rejection_json ? JSON.parse(row.rejection_json) : undefined,
+    analysis: row.analysis_json ? JSON.parse(row.analysis_json) : undefined,
   };
 }
 
@@ -58,8 +61,8 @@ export class SqliteOpportunityRepository implements OpportunityRepository {
     const stmt = this.db.prepare(`
       INSERT OR REPLACE INTO opportunities
         (id, client_id, source, state, title, video_json, score_json,
-         created_at, updated_at, state_history_json, rejection_json)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+         created_at, updated_at, state_history_json, rejection_json, analysis_json)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `);
     for (const o of opportunities) {
       stmt.run(
@@ -74,8 +77,21 @@ export class SqliteOpportunityRepository implements OpportunityRepository {
         o.updatedAt,
         JSON.stringify(o.stateHistory),
         o.rejection ? JSON.stringify(o.rejection) : null,
+        o.analysis ? JSON.stringify(o.analysis) : null,
       );
     }
+  }
+
+  async setAnalysis(id: string, analysis: OpportunityAnalysis): Promise<Opportunity> {
+    const current = await this.get(id);
+    if (!current) throw new Error(`Opportunity not found: ${id}`);
+    const updated: Opportunity = {
+      ...current,
+      analysis,
+      updatedAt: new Date().toISOString(),
+    };
+    await this.saveMany([updated]);
+    return updated;
   }
 
   async transition(

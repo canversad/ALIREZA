@@ -15,6 +15,7 @@ import {
   formatCount,
 } from "@/lib/format";
 import { SectionEmpty } from "./DetailSection";
+import { RunAnalysisButton } from "./RunAnalysisButton";
 
 const dt = (iso: string) => new Date(iso).toISOString().replace("T", " ").slice(0, 16) + " UTC";
 
@@ -370,23 +371,101 @@ export function PlannerLinkage({ d }: { d: OpportunityDossier }) {
   );
 }
 
-/* 11 ─ Deep AI analysis (engine arrives in Iteration 4) */
+/* 11 ─ Deep AI analysis */
+const VERDICT_STYLES: Record<string, string> = {
+  "strong-adapt": "bg-emerald-100 text-emerald-800",
+  "possible-adapt": "bg-sky-100 text-sky-800",
+  skip: "bg-red-100 text-red-700",
+};
+
 export function AiAnalysisSection({ d }: { d: OpportunityDossier }) {
-  void d;
+  const o = d.opportunity;
+  const a = o.analysis;
+
+  if (!a) {
+    const gated = o.state === "discovered" || o.state === "rejected";
+    return (
+      <div>
+        <SectionEmpty>
+          Deep analysis has not been run for this opportunity. Analysis is on-demand and cached
+          permanently once generated — it never runs on content nobody asked about.
+        </SectionEmpty>
+        <div className="mt-3">
+          <RunAnalysisButton opportunityId={o.id} clientId={o.clientId} gated={gated} />
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div>
-      <SectionEmpty>
-        Deep analysis has not been run for this opportunity. Analysis is on-demand and cached
-        permanently once generated — it never runs on content nobody asked about.
-      </SectionEmpty>
-      <button
-        disabled
-        title="The Claude analysis engine arrives in Iteration 4"
-        className="mt-3 cursor-not-allowed rounded-full border border-stone-200 px-4 py-1.5 text-sm font-medium text-stone-400"
-        data-testid="run-analysis"
-      >
-        ✨ Run deep analysis — Iteration 4
-      </button>
+    <div className="space-y-3" data-testid="analysis-result">
+      <p className="flex flex-wrap items-center gap-2">
+        <span
+          data-testid="analysis-verdict"
+          className={`rounded-full px-2.5 py-0.5 text-xs font-semibold uppercase ${VERDICT_STYLES[a.verdict]}`}
+        >
+          {a.verdict}
+        </span>
+        <span className="rounded-full bg-stone-100 px-2.5 py-0.5 text-xs font-medium text-stone-600">
+          confidence: {a.confidence}
+        </span>
+        <span
+          data-testid="analysis-engine"
+          title="Which engine generated this analysis — fixture output is heuristic demo data"
+          className={
+            a.generatedBy.startsWith("fixture")
+              ? "rounded-full border border-amber-300 bg-amber-50 px-2.5 py-0.5 text-xs font-medium text-amber-800"
+              : "rounded-full border border-emerald-300 bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-800"
+          }
+        >
+          {a.generatedBy} · {dt(a.generatedAt)}
+        </span>
+      </p>
+
+      <div>
+        <h3 className="text-xs font-semibold uppercase tracking-wide text-stone-400">
+          Why it went viral
+        </h3>
+        <p className="mt-1 text-sm text-stone-800">{a.whyItWorked}</p>
+      </div>
+
+      <div>
+        <h3 className="text-xs font-semibold uppercase tracking-wide text-stone-400">
+          The transferable pattern
+        </h3>
+        <p className="mt-1 text-sm text-stone-800">{a.transferablePattern}</p>
+      </div>
+
+      {a.adaptationAngles.length > 0 && (
+        <div>
+          <h3 className="text-xs font-semibold uppercase tracking-wide text-stone-400">
+            How {d.client.name} does it
+          </h3>
+          <ul className="mt-1 space-y-1.5">
+            {a.adaptationAngles.map((angle, i) => (
+              <li key={i} className="rounded-xl bg-stone-50 px-3 py-2 text-sm">
+                <p className="text-stone-800">{angle.angle}</p>
+                <p className="mt-0.5 text-xs text-stone-500">
+                  expresses: <em>{angle.brandTrait}</em> · effort: {angle.effort}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {a.watchOuts.length > 0 && (
+        <div>
+          <h3 className="text-xs font-semibold uppercase tracking-wide text-stone-400">
+            Watch out
+          </h3>
+          <ul className="mt-1 space-y-1 text-sm text-stone-800">
+            {a.watchOuts.map((w, i) => (
+              <li key={i}>⚠ {w}</li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
