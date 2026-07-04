@@ -53,6 +53,10 @@ export function getContainer(): Container {
         ? new ClaudeAnalysisEngine()
         : new FixtureAnalysisEngine(),
     };
+    // Diagnostic: confirms at a glance which engine this process picked and why.
+    console.log(
+      `[creative-intelligence] ANTHROPIC_API_KEY ${process.env.ANTHROPIC_API_KEY ? "detected" : "NOT detected"} — analysis engine: ${container.analysis.id}`,
+    );
   }
   return container;
 }
