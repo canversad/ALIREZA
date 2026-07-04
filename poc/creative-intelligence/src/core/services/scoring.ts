@@ -73,17 +73,41 @@ function keywordOverlap(haystack: string, terms: string[]): string[] {
   return terms.filter((t) => text.includes(t.toLowerCase()));
 }
 
-function scoreBrandFit(video: VideoEvidence, brand: BrandDNA, client: ClientProfile): ScoreComponent {
+/**
+ * Which Brand DNA / niche elements this video touches — used both by the
+ * brand-fit score component and by the Opportunity Detail "Brand DNA
+ * references" section. Read-only over BrandDNA.
+ */
+export interface BrandFitExplanation {
+  nicheMatches: string[];
+  productMatches: string[];
+  traitMatches: string[];
+  guardrailConflicts: string[];
+}
+
+export function explainBrandFit(
+  video: VideoEvidence,
+  brand: BrandDNA,
+  client: ClientProfile,
+): BrandFitExplanation {
   const corpus = `${video.title} ${video.tags.join(" ")}`;
-  const guardrailHits = keywordOverlap(corpus, brand.guardrails);
-  if (guardrailHits.length > 0) {
-    return { value: 0.05, reason: `conflicts with guardrail: ${guardrailHits[0]}` };
+  return {
+    nicheMatches: keywordOverlap(corpus, client.nicheKeywords),
+    productMatches: keywordOverlap(corpus, brand.productLines),
+    traitMatches: keywordOverlap(corpus, brand.traits),
+    guardrailConflicts: keywordOverlap(corpus, brand.guardrails),
+  };
+}
+
+function scoreBrandFit(video: VideoEvidence, brand: BrandDNA, client: ClientProfile): ScoreComponent {
+  const fit = explainBrandFit(video, brand, client);
+  if (fit.guardrailConflicts.length > 0) {
+    return { value: 0.05, reason: `conflicts with guardrail: ${fit.guardrailConflicts[0]}` };
   }
-  const nicheHits = keywordOverlap(corpus, client.nicheKeywords);
-  const productHits = keywordOverlap(corpus, brand.productLines);
-  const traitHits = keywordOverlap(corpus, brand.traits);
-  const value = clamp01(0.25 + nicheHits.length * 0.18 + productHits.length * 0.15 + traitHits.length * 0.1);
-  const matched = [...new Set([...nicheHits, ...productHits, ...traitHits])];
+  const value = clamp01(
+    0.25 + fit.nicheMatches.length * 0.18 + fit.productMatches.length * 0.15 + fit.traitMatches.length * 0.1,
+  );
+  const matched = [...new Set([...fit.nicheMatches, ...fit.productMatches, ...fit.traitMatches])];
   const reason =
     matched.length > 0 ? `matches: ${matched.slice(0, 3).join(", ")}` : "adjacent to niche";
   return { value, reason };

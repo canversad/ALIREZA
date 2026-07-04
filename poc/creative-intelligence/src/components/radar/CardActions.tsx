@@ -25,7 +25,14 @@ const REJECT_REASONS: { value: RejectionReason; label: string }[] = [
 const btn =
   "rounded-full px-3 py-1 text-xs font-medium transition disabled:cursor-not-allowed disabled:opacity-40";
 
-export function CardActions({ opportunity }: { opportunity: Opportunity }) {
+export function CardActions({
+  opportunity,
+  hideAnalyze = false,
+}: {
+  opportunity: Opportunity;
+  /** On the detail page itself the Analyze link would self-reference. */
+  hideAnalyze?: boolean;
+}) {
   const [pending, startTransition] = useTransition();
   const [rejectOpen, setRejectOpen] = useState(false);
   const o = opportunity;
@@ -52,12 +59,14 @@ export function CardActions({ opportunity }: { opportunity: Opportunity }) {
         </button>
       )}
 
-      <Link
-        href={`/opportunity/${encodeURIComponent(o.id)}`}
-        className={`${btn} border border-stone-300 text-stone-700 hover:border-stone-500`}
-      >
-        Analyze →
-      </Link>
+      {!hideAnalyze && (
+        <Link
+          href={`/opportunity/${encodeURIComponent(o.id)}`}
+          className={`${btn} border border-stone-300 text-stone-700 hover:border-stone-500`}
+        >
+          Analyze →
+        </Link>
+      )}
 
       {o.state === "discovered" && (
         <>

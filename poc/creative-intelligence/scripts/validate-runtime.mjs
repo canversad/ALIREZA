@@ -253,6 +253,92 @@ try {
   await page.goto(`${BASE_URL}/radar/${clientId}`, { waitUntil: "networkidle" });
   await page.screenshot({ path: path.join(OUT_DIR, "radar-desktop.png"), fullPage: true });
 
+  // ============ Iteration 3: Opportunity Detail (permanent evidence page) ============
+  const fmt = (n) => (n >= 1e6 ? `${(n / 1e6).toFixed(1)}M` : n >= 1e3 ? `${Math.round(n / 1e3)}K` : String(n));
+
+  // Inbox top card is the reopened "$40 fix" — richest dossier (rejection + KB history)
+  const topInbox = db
+    .prepare(
+      "SELECT id, title, json_extract(video_json,'$.metrics.views') views FROM opportunities WHERE client_id=? AND state='discovered' ORDER BY json_extract(score_json,'$.total') DESC LIMIT 1",
+    )
+    .get(clientId);
+  await page.getByRole("link", { name: "Analyze →" }).first().click();
+  await page.waitForURL("**/opportunity/**");
+  check("Analyze navigates to Opportunity Detail", page.url().includes("/opportunity/"));
+
+  const SECTION_IDS = [
+    "metrics", "score", "analysis", "brand", "similar", "published",
+    "decisions", "approvals", "rejections", "kb", "planner",
+  ];
+  let allSections = true;
+  for (const sid of SECTION_IDS) {
+    if ((await page.locator(`[data-testid="section-${sid}"]`).count()) !== 1) {
+      allSections = false;
+      console.log(`   missing section: ${sid}`);
+    }
+  }
+  check(`all ${SECTION_IDS.length} dossier sections render`, allSections);
+
+  const metricsText = (await page.locator('[data-testid="section-metrics"]').textContent()) ?? "";
+  check(
+    "metric evidence matches DB views",
+    metricsText.includes(fmt(topInbox.views)),
+    `expects ${fmt(topInbox.views)}`,
+  );
+  check("metric provenance + fetched timestamp shown", metricsText.includes("fixture") && metricsText.includes("fetched"));
+
+  const scoreText = (await page.locator('[data-testid="section-score"]').textContent()) ?? "";
+  check(
+    "score anatomy shows all four weights",
+    ["40%", "25%", "20%", "15%"].every((w) => scoreText.includes(w)),
+  );
+
+  const decisionsText = (await page.locator('[data-testid="section-decisions"]').textContent()) ?? "";
+  check("decision history includes harvest event", decisionsText.includes("harvested into the feed"));
+
+  // This card was rejected then reopened in the earlier flow:
+  const rejectionsText = (await page.locator('[data-testid="section-rejections"]').textContent()) ?? "";
+  check("rejection history survives reopen", rejectionsText.includes("later reopened"), rejectionsText.trim().slice(0, 60));
+  const kbText = (await page.locator('[data-testid="section-kb"]').textContent()) ?? "";
+  check("KB reference row shown (rejected decision)", kbText.includes("rejected") && kbText.includes("off-brand"));
+
+  check("related published content found", (await page.locator('[data-testid="section-published"] li').count()) > 0);
+  const plannerText = (await page.locator('[data-testid="section-planner"]').textContent()) ?? "";
+  check("planner linkage shows honest not-planned state", plannerText.includes("Not planned yet"));
+  check(
+    "AI analysis is a placeholder section (engine = Iteration 4)",
+    (await page.locator('[data-testid="run-analysis"]').isDisabled()) === true,
+  );
+
+  // Similar opportunities link navigates to another dossier
+  const similarLinks = await page.locator('[data-testid="similar-link"]').count();
+  check("similar opportunities listed", similarLinks > 0, `links=${similarLinks}`);
+  const beforeUrl = page.url();
+  await page.locator('[data-testid="similar-link"]').first().click();
+  await page.waitForFunction((prev) => location.href !== prev, beforeUrl);
+  check("similar link navigates to another opportunity", page.url().includes("/opportunity/") && page.url() !== beforeUrl);
+
+  // Shortlisted opportunity shows gate A1 passed
+  const shortId = db
+    .prepare("SELECT id FROM opportunities WHERE client_id=? AND state='shortlisted' LIMIT 1")
+    .get(clientId).id;
+  await page.goto(`${BASE_URL}/opportunity/${encodeURIComponent(shortId)}`, { waitUntil: "networkidle" });
+  const gateA1 = (await page.locator('[data-gate="shortlisted"]').textContent()) ?? "";
+  check("approvals: gate A1 passed for shortlisted opp", gateA1.includes("passed") && gateA1.includes("strategist"), gateA1.trim().slice(0, 70));
+  const gateA3 = (await page.locator('[data-gate="planned"]').textContent()) ?? "";
+  check("approvals: gate A3 honestly not reached", gateA3.includes("not reached"));
+
+  // Guardrail fixture shows a Brand DNA conflict
+  const guardId = db
+    .prepare("SELECT id FROM opportunities WHERE client_id=? AND title LIKE 'Street takeover%' LIMIT 1")
+    .get(clientId).id;
+  await page.goto(`${BASE_URL}/opportunity/${encodeURIComponent(guardId)}`, { waitUntil: "networkidle" });
+  const guardText = (await page.locator('[data-testid="guardrail-conflict"]').textContent()) ?? "";
+  check("guardrail conflict surfaced in Brand DNA section", guardText.includes("street racing") || guardText.includes("crash"), guardText.trim().slice(0, 70));
+
+  await page.goto(`${BASE_URL}/opportunity/${encodeURIComponent(topInbox.id)}`, { waitUntil: "networkidle" });
+  await page.screenshot({ path: path.join(OUT_DIR, "detail-desktop.png"), fullPage: true });
+
   // Narrow viewport
   await page.setViewportSize({ width: 420, height: 900 });
   await page.goto(`${BASE_URL}/hub/${clientId}`, { waitUntil: "networkidle" });
@@ -268,6 +354,13 @@ try {
   );
   check("radar: no horizontal overflow at 420px", !radarOverflow);
   await page.screenshot({ path: path.join(OUT_DIR, "radar-mobile.png"), fullPage: true });
+
+  await page.goto(`${BASE_URL}/opportunity/${encodeURIComponent(topInbox.id)}`, { waitUntil: "networkidle" });
+  const detailOverflow = await page.evaluate(
+    () => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
+  );
+  check("detail: no horizontal overflow at 420px", !detailOverflow);
+  await page.screenshot({ path: path.join(OUT_DIR, "detail-mobile.png"), fullPage: true });
 } finally {
   await browser.close();
 }

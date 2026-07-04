@@ -9,6 +9,7 @@ import type {
   DiscoveryProvider,
   KnowledgeBasePort,
   OpportunityRepository,
+  PublishedContentPort,
 } from "@/core/ports";
 import { getDb } from "./sqlite/db";
 import { SqliteOpportunityRepository } from "./sqlite/opportunity-repo";
@@ -18,6 +19,7 @@ import {
   FixtureClientPort,
   FixtureDiscoveryProvider,
 } from "./fixtures";
+import { FixturePublishedContentPort } from "./fixtures/published-content";
 import { runHarvest } from "./seed-harvest";
 
 export interface Container {
@@ -26,6 +28,7 @@ export interface Container {
   opportunities: OpportunityRepository;
   discovery: DiscoveryProvider;
   knowledgeBase: KnowledgeBasePort;
+  publishedContent: PublishedContentPort;
 }
 
 let container: Container | null = null;
@@ -40,6 +43,7 @@ export function getContainer(): Container {
       opportunities: new SqliteOpportunityRepository(db),
       discovery: new FixtureDiscoveryProvider(),
       knowledgeBase: new SqliteKnowledgeBase(db),
+      publishedContent: new FixturePublishedContentPort(),
     };
   }
   return container;

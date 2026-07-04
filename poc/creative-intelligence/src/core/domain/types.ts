@@ -152,6 +152,25 @@ export interface LocalSignal {
   window: string; // e.g. "Jul 1–7"
 }
 
+/**
+ * A piece of content the client already published (read-only view of the
+ * platform's content history, accessed via PublishedContentPort).
+ */
+export interface PublishedContent {
+  id: string;
+  clientId: string;
+  title: string;
+  platform: Platform;
+  publishedAt: string;
+  tags: string[];
+  performance: {
+    views: number;
+    /** e.g. 2.12 = +112% vs the account's average post */
+    vsAccountAverage: number;
+  };
+  url?: string;
+}
+
 /** Read-only view of the platform's Brand DNA concept (accessed via port). */
 export interface BrandDNA {
   clientId: string;

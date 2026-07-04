@@ -10,6 +10,7 @@ import type {
   ClientProfile,
   Opportunity,
   OpportunityState,
+  PublishedContent,
   Rejection,
   VideoEvidence,
 } from "../domain/types";
@@ -84,6 +85,14 @@ export interface KnowledgeBaseDecision {
   summary: string;
   reason?: string;
   at: string;
+}
+
+/**
+ * Read-only access to the client's previously published content and its
+ * performance (the platform's content history supplies the real adapter).
+ */
+export interface PublishedContentPort {
+  listByClient(clientId: string): Promise<PublishedContent[]>;
 }
 
 /**
