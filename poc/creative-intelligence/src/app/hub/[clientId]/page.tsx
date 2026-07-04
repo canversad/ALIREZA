@@ -55,7 +55,7 @@ export default async function ResearchHub({
       </section>
 
       <section className="mt-6" aria-label="Pipeline">
-        <PipelineStrip pipeline={digest.pipeline} />
+        <PipelineStrip pipeline={digest.pipeline} clientId={client.id} />
       </section>
 
       <footer className="mt-8 border-t border-stone-200 pt-4 text-xs text-stone-500">

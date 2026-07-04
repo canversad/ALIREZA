@@ -68,6 +68,10 @@ export interface VideoEvidence {
   metrics: VideoMetrics;
   provenance: Provenance;
   fetchedAt: string; // ISO timestamp
+  /** BCP-47-ish language code when the source exposes it (e.g. "en", "fr"). */
+  language?: string;
+  /** Country/region code when available (e.g. "CA", "US") — often absent. */
+  region?: string;
 }
 
 /** One component of the Opportunity Score, always with a human-readable reason. */

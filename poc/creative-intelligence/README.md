@@ -26,8 +26,8 @@ npm run validate:runtime  # drives the running app with Playwright (needs dev/st
 
 | Iteration | Screen | Status |
 |---|---|---|
-| 1 | Research Hub (+ scaffold, domain, scoring, fixtures) | ✅ this iteration |
-| 2 | Trend Radar | pending approval |
+| 1 | Research Hub (+ scaffold, domain, scoring, fixtures) | ✅ approved |
+| 2 | Trend Radar (feed, filters, decisions, learning signals) | ✅ this iteration |
 | 3 | Opportunity Detail | — |
 | 4 | AI Analysis (Claude adapter + fixture fallback) | — |
 | 5 | Brief Editor | — |
@@ -58,7 +58,7 @@ Rules enforced by layout:
 
 ## Data
 
-The PoC currently runs on a **fixture dataset** (37 fabricated-but-realistic videos for
+The PoC currently runs on a **fixture dataset** (39 fabricated-but-realistic videos for
 the SPH Auto Parts test client, metric shapes modeled on the feasibility research).
 Real discovery adapters (ScrapeCreators, YouTube Data API) and the Claude analysis
 adapter activate via `.env` keys in later iterations — see `.env.example`.

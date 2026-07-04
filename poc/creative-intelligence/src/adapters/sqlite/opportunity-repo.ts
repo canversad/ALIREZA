@@ -96,7 +96,12 @@ export class SqliteOpportunityRepository implements OpportunityRepository {
         ...current.stateHistory,
         { from: current.state, to, at: now, by, note: options?.note },
       ],
-      rejection: to === "rejected" ? options?.rejection : current.rejection,
+      rejection:
+        to === "rejected"
+          ? options?.rejection
+          : current.state === "rejected" && to === "discovered"
+            ? undefined // reopen clears the active rejection (KB log keeps history)
+            : current.rejection,
     };
     await this.saveMany([updated]);
     return updated;

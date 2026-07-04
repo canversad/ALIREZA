@@ -7,10 +7,12 @@ import type {
   BrandDNAPort,
   ClientPort,
   DiscoveryProvider,
+  KnowledgeBasePort,
   OpportunityRepository,
 } from "@/core/ports";
 import { getDb } from "./sqlite/db";
 import { SqliteOpportunityRepository } from "./sqlite/opportunity-repo";
+import { SqliteKnowledgeBase } from "./sqlite/knowledge-base";
 import {
   FixtureBrandDNAPort,
   FixtureClientPort,
@@ -23,6 +25,7 @@ export interface Container {
   brandDna: BrandDNAPort;
   opportunities: OpportunityRepository;
   discovery: DiscoveryProvider;
+  knowledgeBase: KnowledgeBasePort;
 }
 
 let container: Container | null = null;
@@ -30,11 +33,13 @@ let seeded = false;
 
 export function getContainer(): Container {
   if (!container) {
+    const db = getDb();
     container = {
       clients: new FixtureClientPort(),
       brandDna: new FixtureBrandDNAPort(),
-      opportunities: new SqliteOpportunityRepository(getDb()),
+      opportunities: new SqliteOpportunityRepository(db),
       discovery: new FixtureDiscoveryProvider(),
+      knowledgeBase: new SqliteKnowledgeBase(db),
     };
   }
   return container;

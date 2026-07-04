@@ -84,11 +84,174 @@ try {
 
   await page.screenshot({ path: path.join(OUT_DIR, "hub-desktop.png"), fullPage: true });
 
-  // Radar door navigates to the stub route
+  // Radar door navigates to the feed
   await page.click('[data-testid="door-radar"]');
   await page.waitForURL(`**/radar/${clientId}`);
   check("Trend Radar door navigates", page.url().includes(`/radar/${clientId}`));
-  await page.goBack({ waitUntil: "networkidle" });
+
+  // ============ Iteration 2: Trend Radar ============
+  const cards = page.locator('[data-testid="opportunity-card"]');
+  const inboxCount = await cards.count();
+  check("radar inbox shows all discovered", inboxCount === total, `cards=${inboxCount} vs db=${total}`);
+
+  // Feed order matches DB expectation (top score first, no rejections yet)
+  const dbTop = db
+    .prepare(
+      "SELECT title FROM opportunities WHERE client_id = ? AND state='discovered' ORDER BY json_extract(score_json,'$.total') DESC LIMIT 1",
+    )
+    .get(clientId).title;
+  const firstTitle = await cards.first().locator("h3").textContent();
+  check("rank #1 matches DB top score", firstTitle?.trim() === dbTop, `ui="${firstTitle}" db="${dbTop}"`);
+
+  // Evidence + reasons + provenance visible on the first card without opening it
+  const firstCard = cards.first();
+  const evidence = (await firstCard.locator('[data-testid="card-evidence"]').textContent()) ?? "";
+  check(
+    "evidence row complete (views/likes/comments/shares/engagement/baseline)",
+    ["views", "likes", "comments", "shares", "engagement", "baseline"].every((w) => evidence.includes(w)),
+    evidence.trim().slice(0, 90),
+  );
+  check("published age visible", (await firstCard.locator('[data-testid="card-published"]').count()) === 1);
+  check(
+    "provenance + confidence badge on card",
+    ((await firstCard.locator('[data-testid="provenance-badge"]').textContent()) ?? "").includes("fixture"),
+  );
+  const chipTexts = (await firstCard.locator('[data-testid="score-chips"]').textContent()) ?? "";
+  check(
+    "all four score-component chips with reasons",
+    ["viral", "brand fit", "production", "fresh"].every((c) => chipTexts.includes(c)),
+    chipTexts.slice(0, 80),
+  );
+  check(
+    "four actions present (Watch/Analyze/Shortlist/Reject)",
+    await (async () => {
+      const t = (await firstCard.locator('[data-testid="card-actions"]').textContent()) ?? "";
+      return ["Watch", "Analyze", "Shortlist", "Reject"].every((a) => t.includes(a));
+    })(),
+  );
+
+  const waitForCards = (n) =>
+    page.waitForFunction(
+      (expected) =>
+        document.querySelectorAll('[data-testid="opportunity-card"]').length === expected,
+      n,
+    );
+
+  // Filters: platform=youtube shows only YouTube cards
+  const dbYt = db
+    .prepare(
+      "SELECT COUNT(*) n FROM opportunities WHERE client_id=? AND state='discovered' AND json_extract(video_json,'$.platform')='youtube'",
+    )
+    .get(clientId).n;
+  await page.selectOption('[data-testid="filter-platform"]', "youtube");
+  await waitForCards(dbYt);
+  const ytBadPlatform = await page
+    .locator('[data-testid="opportunity-card"]:not([data-platform="youtube"])')
+    .count();
+  check("platform filter: only YouTube cards", ytBadPlatform === 0, `ui=${dbYt} non-yt=${ytBadPlatform}`);
+  await page.selectOption('[data-testid="filter-platform"]', "");
+  await waitForCards(total);
+
+  // Difficulty filter: heavy narrows the feed to hard-to-reproduce formats
+  await page.selectOption('[data-testid="filter-difficulty"]', "heavy");
+  await page.waitForFunction((n) => {
+    const c = document.querySelectorAll('[data-testid="opportunity-card"]').length;
+    return c > 0 && c < n;
+  }, total);
+  const heavyCards = await page.locator('[data-testid="opportunity-card"]').count();
+  check("difficulty filter narrows feed", heavyCards > 0 && heavyCards < total, `heavy=${heavyCards}`);
+  await page.selectOption('[data-testid="filter-difficulty"]', "");
+  await waitForCards(total);
+
+  // Language filter: fr shows exactly the French fixtures
+  const dbFr = db
+    .prepare(
+      "SELECT COUNT(*) n FROM opportunities WHERE client_id=? AND state='discovered' AND json_extract(video_json,'$.language')='fr'",
+    )
+    .get(clientId).n;
+  await page.selectOption('[data-testid="filter-language"]', "fr");
+  await waitForCards(dbFr);
+  check("language filter matches DB", dbFr > 0, `fr cards=${dbFr}`);
+  await page.selectOption('[data-testid="filter-language"]', "");
+  await waitForCards(total);
+
+  // Shortlist: top card moves out of inbox, DB + hub pipeline update
+  const shortlistedTitle = (await page
+    .locator('[data-testid="opportunity-card"]')
+    .first()
+    .locator("h3")
+    .textContent())?.trim();
+  await page.locator('[data-testid="action-shortlist"]').first().click();
+  await page.waitForFunction(
+    (n) => document.querySelectorAll('[data-testid="opportunity-card"]').length === n,
+    total - 1,
+  );
+  const dbShortlisted = db
+    .prepare("SELECT COUNT(*) n FROM opportunities WHERE client_id=? AND state='shortlisted'")
+    .get(clientId).n;
+  check("shortlist persists to DB", dbShortlisted === 1, `db shortlisted=${dbShortlisted}`);
+  await page.click('[data-testid="tab-shortlisted"]');
+  // client-side nav: wait for the tab's DOM, not load state
+  await page.waitForSelector('[data-testid="opportunity-card"][data-state="shortlisted"]');
+  const shortTabTitle = (await page
+    .locator('[data-testid="opportunity-card"] h3')
+    .first()
+    .textContent())?.trim();
+  check("shortlisted card in Shortlisted tab", shortTabTitle === shortlistedTitle, `"${shortTabTitle}"`);
+
+  // Reject with reason from the inbox; expect KB row + learning chip on similar card
+  await page.click('[data-testid="tab-inbox"]');
+  await waitForCards(total - 1); // inbox after one shortlist
+  const rejectedTitle = (await page
+    .locator('[data-testid="opportunity-card"]')
+    .first()
+    .locator("h3")
+    .textContent())?.trim();
+  await page.locator('[data-testid="action-reject"]').first().click();
+  await page.locator('[data-testid="reject-off-brand"]').first().click();
+  await page.waitForFunction(
+    (n) => document.querySelectorAll('[data-testid="opportunity-card"]').length === n,
+    total - 2,
+  );
+  const kbRow = db
+    .prepare("SELECT reason, kind FROM kb_decisions WHERE client_id=? ORDER BY id DESC LIMIT 1")
+    .get(clientId);
+  check(
+    "rejection recorded in Knowledge Base with reason",
+    kbRow?.kind === "rejected" && kbRow?.reason === "off-brand",
+    JSON.stringify(kbRow),
+  );
+  const learningChips = await page.locator('[data-testid="learning-chip"]').count();
+  check("learning chip appears on similar cards", learningChips > 0, `chips=${learningChips}`);
+
+  // Rejected tab shows the right card with its reason + reopen restores to inbox
+  await page.click('[data-testid="tab-rejected"]');
+  await page.waitForSelector('[data-testid="opportunity-card"][data-state="rejected"]');
+  const rejTabTitle = (await page.locator('[data-testid="opportunity-card"] h3').first().textContent())?.trim();
+  check("rejected card in Rejected tab", rejTabTitle === rejectedTitle, `"${rejTabTitle}"`);
+  const rejCardText = (await page.locator('[data-testid="card-rejection"]').first().textContent()) ?? "";
+  check("rejected card shows its reason", rejCardText.includes("off-brand"), rejCardText.trim());
+  await page.locator('[data-testid="action-reopen"]').first().click();
+  await page.waitForFunction(
+    () => document.querySelectorAll('[data-testid="opportunity-card"]').length === 0,
+  );
+  const dbRejected = db
+    .prepare("SELECT COUNT(*) n FROM opportunities WHERE client_id=? AND state='rejected'")
+    .get(clientId).n;
+  check("reopen returns card to discovered", dbRejected === 0, `db rejected=${dbRejected}`);
+  check(
+    "KB keeps the rejection decision after reopen",
+    db.prepare("SELECT COUNT(*) n FROM kb_decisions WHERE client_id=? AND kind='rejected'").get(clientId).n === 1,
+  );
+
+  // Hub pipeline reflects the shortlist
+  await page.goto(`${BASE_URL}/hub/${clientId}`, { waitUntil: "networkidle" });
+  const hubShortChip = await page.textContent('[data-testid="pipeline-shortlisted"]');
+  check("hub pipeline shows 1 shortlisted", hubShortChip?.trim() === "1", `chip=${hubShortChip}`);
+
+  // Radar screenshot (back on inbox)
+  await page.goto(`${BASE_URL}/radar/${clientId}`, { waitUntil: "networkidle" });
+  await page.screenshot({ path: path.join(OUT_DIR, "radar-desktop.png"), fullPage: true });
 
   // Narrow viewport
   await page.setViewportSize({ width: 420, height: 900 });
@@ -96,8 +259,15 @@ try {
   const horizontalOverflow = await page.evaluate(
     () => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
   );
-  check("no horizontal overflow at 420px", !horizontalOverflow);
+  check("hub: no horizontal overflow at 420px", !horizontalOverflow);
   await page.screenshot({ path: path.join(OUT_DIR, "hub-mobile.png"), fullPage: true });
+
+  await page.goto(`${BASE_URL}/radar/${clientId}`, { waitUntil: "networkidle" });
+  const radarOverflow = await page.evaluate(
+    () => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
+  );
+  check("radar: no horizontal overflow at 420px", !radarOverflow);
+  await page.screenshot({ path: path.join(OUT_DIR, "radar-mobile.png"), fullPage: true });
 } finally {
   await browser.close();
 }

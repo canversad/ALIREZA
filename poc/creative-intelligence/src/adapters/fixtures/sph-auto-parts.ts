@@ -60,6 +60,8 @@ interface FixtureSpec {
   durationSec: number;
   format: VideoFormat;
   tags: string[];
+  language?: string;
+  region?: string;
 }
 
 const specs: FixtureSpec[] = [
@@ -100,7 +102,22 @@ const specs: FixtureSpec[] = [
   { platform: "youtube", title: "I bought every 'engine restore' additive. One worked.", handle: "@projectfarmish", name: "Garage Verdict", followers: 1_400_000, daysAgo: 28, views: 3_100_000, engagement: 0.044, durationSec: 70, format: "before-after", tags: ["engine", "additive", "test"] },
   { platform: "tiktok", title: "Drive-thru oil change vs doing it yourself: real math", handle: "@torquetok", name: "TorqueTok", followers: 88_000, daysAgo: 15, views: 1_150_000, engagement: 0.077, durationSec: 46, format: "myth-bust", tags: ["oil change", "diy repair", "savings"] },
   { platform: "tiktok", title: "The one tool every glovebox needs (it's $9)", handle: "@drivewaydoctor", name: "Driveway Doctor", followers: 96_000, daysAgo: 25, views: 2_600_000, engagement: 0.068, durationSec: 30, format: "counter-demo", tags: ["tools", "safety", "budget"] },
+  { platform: "tiktok", title: "Pièces d'origine ou aftermarket? Un mécano de Montréal tranche", handle: "@garagemtl", name: "Garage MTL", followers: 54_000, daysAgo: 7, views: 460_000, engagement: 0.084, durationSec: 43, format: "talking-head", tags: ["oem", "aftermarket", "montreal", "quebec"], language: "fr", region: "CA" },
+  { platform: "tiktok", title: "3 bruits de freins à ne jamais ignorer", handle: "@garagemtl", name: "Garage MTL", followers: 54_000, daysAgo: 14, views: 380_000, engagement: 0.077, durationSec: 35, format: "checklist", tags: ["brake", "diagnosis", "quebec"], language: "fr", region: "CA" },
 ];
+
+/** Creators with known home regions; everyone else stays region-unknown (realistic). */
+const CREATOR_REGIONS: Record<string, string> = {
+  "@sixsidegarage": "CA",
+  "@gtapartsrun": "CA",
+  "@northwrench": "CA",
+  "@drivewaydoctor": "CA",
+  "@garagemtl": "CA",
+  "@dylansdiag": "US",
+  "@rustbeltrebuilds": "US",
+  "@projectfarmish": "US",
+  "@buildbaybros": "US",
+};
 
 function toEvidence(spec: FixtureSpec, now: Date): VideoEvidence {
   const publishedAt = new Date(now.getTime() - spec.daysAgo * 86_400_000).toISOString();
@@ -136,6 +153,8 @@ function toEvidence(spec: FixtureSpec, now: Date): VideoEvidence {
     },
     provenance: "fixture",
     fetchedAt: now.toISOString(),
+    language: spec.language ?? "en",
+    region: spec.region ?? CREATOR_REGIONS[spec.handle],
   };
 }
 

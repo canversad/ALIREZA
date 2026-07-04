@@ -7,13 +7,13 @@ import type { OpportunityState } from "./types";
  */
 const TRANSITIONS: Record<OpportunityState, OpportunityState[]> = {
   discovered: ["shortlisted", "rejected"],
-  shortlisted: ["analyzed", "briefed", "rejected"],
+  shortlisted: ["analyzed", "briefed", "rejected", "discovered"], // discovered = un-shortlist
   analyzed: ["briefed", "rejected"],
   briefed: ["approved", "rejected"],
   approved: ["pitched", "rejected"],
   pitched: ["planned", "briefed", "rejected"], // briefed = client asked for revision
   planned: [],
-  rejected: [],
+  rejected: ["discovered"], // reopen — fast curation must be reversible
 };
 
 export function canTransition(
