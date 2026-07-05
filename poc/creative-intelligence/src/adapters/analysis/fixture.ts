@@ -17,6 +17,7 @@ const FORMAT_MECHANIC: Record<VideoFormat, string> = {
   "cinematic-build": "craft spectacle earns watch time and shares",
   "vlog-tour": "behind-the-scenes access humanizes the business",
   reaction: "borrowed context plus authentic expertise is cheap to produce",
+  unclassified: "the hook and pacing carried it more than any single format cue",
 };
 
 export class FixtureAnalysisEngine implements AnalysisEngine {

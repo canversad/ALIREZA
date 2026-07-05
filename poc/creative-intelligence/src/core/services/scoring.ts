@@ -35,6 +35,8 @@ const FORMAT_EFFORT: Record<VideoFormat, number> = {
   reaction: 0.65,
   "vlog-tour": 0.5,
   "cinematic-build": 0.25,
+  // Unknown format → neutral midpoint; duration still adjusts the final value.
+  unclassified: 0.6,
 };
 
 const LOCALITY_TERMS = ["toronto", "gta", "ontario", "canada", "canadian"];

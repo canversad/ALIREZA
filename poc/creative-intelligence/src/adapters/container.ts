@@ -17,12 +17,9 @@ import { FixtureAnalysisEngine } from "./analysis/fixture";
 import { getDb } from "./sqlite/db";
 import { SqliteOpportunityRepository } from "./sqlite/opportunity-repo";
 import { SqliteKnowledgeBase } from "./sqlite/knowledge-base";
-import {
-  FixtureBrandDNAPort,
-  FixtureClientPort,
-  FixtureDiscoveryProvider,
-} from "./fixtures";
+import { FixtureBrandDNAPort, FixtureClientPort } from "./fixtures";
 import { FixturePublishedContentPort } from "./fixtures/published-content";
+import { selectDiscoveryProvider } from "./discovery";
 import { runHarvest } from "./seed-harvest";
 
 export interface Container {
@@ -35,6 +32,19 @@ export interface Container {
   analysis: AnalysisEngine;
 }
 
+/**
+ * Analysis-engine selection, symmetric to selectDiscoveryProvider:
+ *   CI_ANALYSIS_PROVIDER=fixture → always the heuristic engine (pins the suite)
+ *   CI_ANALYSIS_PROVIDER=claude  → force Claude (errors if no key)
+ *   otherwise: Claude when ANTHROPIC_API_KEY is present, fixture when not.
+ */
+function selectAnalysisEngine(): AnalysisEngine {
+  const forced = process.env.CI_ANALYSIS_PROVIDER;
+  if (forced === "fixture") return new FixtureAnalysisEngine();
+  if (forced === "claude") return new ClaudeAnalysisEngine();
+  return process.env.ANTHROPIC_API_KEY ? new ClaudeAnalysisEngine() : new FixtureAnalysisEngine();
+}
+
 let container: Container | null = null;
 let seeded = false;
 
@@ -45,17 +55,17 @@ export function getContainer(): Container {
       clients: new FixtureClientPort(),
       brandDna: new FixtureBrandDNAPort(),
       opportunities: new SqliteOpportunityRepository(db),
-      discovery: new FixtureDiscoveryProvider(),
+      discovery: selectDiscoveryProvider(),
       knowledgeBase: new SqliteKnowledgeBase(db),
       publishedContent: new FixturePublishedContentPort(),
-      // Real engine only when a key is configured — the app never hard-fails without one.
-      analysis: process.env.ANTHROPIC_API_KEY
-        ? new ClaudeAnalysisEngine()
-        : new FixtureAnalysisEngine(),
+      analysis: selectAnalysisEngine(),
     };
-    // Diagnostic: confirms at a glance which engine this process picked and why.
+    // Diagnostic: confirms at a glance which engine + provider this process picked.
     console.log(
       `[creative-intelligence] ANTHROPIC_API_KEY ${process.env.ANTHROPIC_API_KEY ? "detected" : "NOT detected"} — analysis engine: ${container.analysis.id}`,
+    );
+    console.log(
+      `[creative-intelligence] YOUTUBE_API_KEY ${process.env.YOUTUBE_API_KEY ? "detected" : "NOT detected"} — discovery provider: ${container.discovery.id}`,
     );
   }
   return container;

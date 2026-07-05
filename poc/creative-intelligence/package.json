@@ -10,6 +10,9 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint src scripts --ext .ts,.tsx,.mjs",
     "seed": "tsx scripts/seed.ts",
+    "seed:fixture": "cross-env CI_DISCOVERY_PROVIDER=fixture CI_ANALYSIS_PROVIDER=fixture tsx scripts/seed.ts --reset",
+    "probe:youtube": "tsx scripts/probe-youtube.ts",
+    "start:fixture": "cross-env CI_DISCOVERY_PROVIDER=fixture CI_ANALYSIS_PROVIDER=fixture next start -p 3100",
     "validate": "npm run typecheck && npm run lint && npm run build",
     "validate:runtime": "node scripts/validate-runtime.mjs"
   },
@@ -25,6 +28,8 @@
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.0",
     "autoprefixer": "^10.4.20",
+    "cross-env": "^10.1.0",
+    "dotenv": "^17.4.2",
     "eslint": "^9.25.0",
     "eslint-config-next": "^15.3.0",
     "playwright-core": "^1.52.0",

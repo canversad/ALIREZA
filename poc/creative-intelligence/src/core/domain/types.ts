@@ -36,7 +36,9 @@ export type VideoFormat =
   | "myth-bust"
   | "cinematic-build"
   | "vlog-tour"
-  | "reaction";
+  | "reaction"
+  /** Real providers can't always infer a format — honest fallback, not fake precision. */
+  | "unclassified";
 
 export interface Creator {
   handle: string;
