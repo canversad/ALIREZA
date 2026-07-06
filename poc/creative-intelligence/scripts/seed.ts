@@ -1,8 +1,17 @@
 /**
- * Seed the local SQLite store from fixture data.
+ * Seed the local SQLite store.
  *   npm run seed            — seed if empty
  *   npm run seed -- --reset — wipe and reseed
+ *
+ * Uses whichever discovery/analysis providers the env selects (real when their
+ * keys are present, fixture otherwise). Next.js loads .env.local automatically,
+ * but this is a standalone tsx script, so — exactly like probe-youtube.ts — it
+ * must load the env itself BEFORE the container reads process.env.
  */
+import { config } from "dotenv";
+config({ path: ".env.local" });
+config({ path: ".env" });
+
 import { getContainer } from "../src/adapters/container";
 import { runHarvest } from "../src/adapters/seed-harvest";
 import { resetDb } from "../src/adapters/sqlite/db";
