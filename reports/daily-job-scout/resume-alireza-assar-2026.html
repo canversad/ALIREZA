@@ -1,0 +1,412 @@
+<title>Alireza Assar — Fractional CMO &amp; Digital Marketing Strategist</title>
+<style>
+  :root {
+    --bg: #FAFAF8;
+    --text: #1A1A1E;
+    --text-secondary: #555B66;
+    --accent: #2D4A6F;
+    --border: #C8CCD2;
+    --bg-subtle: #F0F0EC;
+    --kw: #1A1A1E;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16181D;
+      --text: #E8E5DE;
+      --text-secondary: #9CA3AF;
+      --accent: #7BAADB;
+      --border: #2E3239;
+      --bg-subtle: #1D2028;
+      --kw: #E8E5DE;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #16181D;
+    --text: #E8E5DE;
+    --text-secondary: #9CA3AF;
+    --accent: #7BAADB;
+    --border: #2E3239;
+    --bg-subtle: #1D2028;
+    --kw: #E8E5DE;
+  }
+  :root[data-theme="light"] {
+    --bg: #FAFAF8;
+    --text: #1A1A1E;
+    --text-secondary: #555B66;
+    --accent: #2D4A6F;
+    --border: #C8CCD2;
+    --bg-subtle: #F0F0EC;
+    --kw: #1A1A1E;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    font-size: 13.5px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  @media print {
+    body { background: #fff; color: #111; font-size: 10.5pt; line-height: 1.4; }
+    .resume { padding: 0; max-width: none; }
+    .section { break-inside: avoid; }
+    .no-print { display: none; }
+    :root { --accent: #2D4A6F; --text: #111; --text-secondary: #444; --border: #bbb; --bg-subtle: #f4f4f4; --kw: #111; }
+  }
+
+  .resume {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 2rem 1.75rem 2.5rem;
+  }
+
+  /* Header — ATS: Name, title, contact on separate parseable lines */
+  .name {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1.85rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  .title-line {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-top: 0.3rem;
+  }
+  .contact-line {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 0.4rem;
+    line-height: 1.6;
+  }
+  .contact-line a { color: var(--text-secondary); text-decoration: none; }
+  .contact-line a:hover { text-decoration: underline; }
+  .sep { margin: 0 0.4em; }
+
+  /* Section */
+  .section {
+    margin-top: 1.3rem;
+    padding-top: 0.8rem;
+    border-top: 1.5px solid var(--accent);
+  }
+  .section-title {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.6rem;
+  }
+
+  /* Summary — keyword-dense for ATS */
+  .summary {
+    font-size: 0.88rem;
+    line-height: 1.6;
+    color: var(--text);
+  }
+
+  /* Experience */
+  .entry { margin-bottom: 1.15rem; }
+  .entry:last-child { margin-bottom: 0; }
+  .entry-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.2rem 0.75rem;
+  }
+  .entry-title {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--text);
+  }
+  .entry-date {
+    font-size: 0.76rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .entry-org {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.25rem;
+  }
+  .entry-loc {
+    font-size: 0.76rem;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+  .bullets {
+    list-style: none;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    margin-top: 0.2rem;
+  }
+  .bullets li {
+    padding-left: 1.1em;
+    text-indent: -1.1em;
+    margin-bottom: 0.12rem;
+  }
+  .bullets li::before {
+    content: "\2022";
+    color: var(--accent);
+    margin-right: 0.45em;
+    font-weight: 700;
+  }
+  .metric {
+    font-weight: 600;
+    color: var(--kw);
+  }
+
+  /* Skills — single column list for ATS parsing */
+  .skills-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem 2rem;
+  }
+  @media (max-width: 500px) { .skills-section { grid-template-columns: 1fr; } }
+  .skill-cat {
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.1rem;
+  }
+  .skill-items {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    line-height: 1.45;
+  }
+
+  /* Tools — flat comma list, ATS-friendly */
+  .tools-line {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+  }
+
+  /* Education & Certs */
+  .cert-item {
+    font-size: 0.82rem;
+    margin-bottom: 0.2rem;
+  }
+  .cert-name { font-weight: 600; color: var(--text); }
+  .cert-org { color: var(--text-secondary); }
+
+  /* ATS invisible keyword block */
+  .ats-kw {
+    position: absolute;
+    left: -9999px;
+    font-size: 1px;
+    color: transparent;
+  }
+</style>
+
+<div class="resume">
+
+  <!-- ═══════════ HEADER ═══════════ -->
+  <div class="name">Alireza Assar</div>
+  <div class="title-line">Fractional CMO | Digital Marketing Strategist | AI Automation Consultant</div>
+  <div class="contact-line">
+    Richmond Hill, Ontario, Canada<br>
+    <a href="mailto:alirezaassar.ca@gmail.com">alirezaassar.ca@gmail.com</a>
+    <span class="sep">|</span> Languages: English, Persian (Farsi)
+    <span class="sep">|</span> Available: Part-Time, Contract, Freelance, Fractional
+  </div>
+
+  <!-- ═══════════ PROFESSIONAL SUMMARY ═══════════ -->
+  <section class="section">
+    <div class="section-title">Professional Summary</div>
+    <p class="summary">
+      Results-driven Digital Marketing Strategist and Fractional CMO with <strong>8+ years</strong> of progressive experience in digital marketing, brand strategy, web design, SEO, paid media, social media management, content creation, graphic design, and AI-powered marketing automation. Proven track record of building and leading full-funnel marketing operations for startups and SMBs — from brand positioning and campaign strategy to hands-on execution across Google Ads, Meta Ads, email marketing, and social media platforms. Expert in marketing automation using Make.com, Zapier, and OpenAI, delivering workflow efficiencies and AI-driven lead generation systems. Experienced in managing cross-functional teams, agency partnerships, and client relationships. Adept at translating business objectives into data-driven marketing strategies that increase brand awareness, generate qualified leads, and drive measurable revenue growth. Bilingual (English/Persian) with ability to serve dual-language markets across Canada and internationally.
+    </p>
+  </section>
+
+  <!-- ═══════════ WORK EXPERIENCE ═══════════ -->
+  <section class="section">
+    <div class="section-title">Professional Experience</div>
+
+    <!-- Role 1: 2024–Present -->
+    <div class="entry">
+      <div class="entry-row">
+        <span class="entry-title">Fractional CMO &amp; AI Marketing Automation Consultant</span>
+        <span class="entry-date">Jan 2024 – Present</span>
+      </div>
+      <div class="entry-org">Independent Consulting — Multiple Clients (Startups &amp; SMBs)</div>
+      <div class="entry-loc">Toronto GTA, Ontario, Canada (On-Site &amp; Hybrid)</div>
+      <ul class="bullets">
+        <li>Serve as Fractional Chief Marketing Officer for <span class="metric">5+</span> concurrent clients, providing strategic marketing leadership, brand positioning, and go-to-market planning across diverse industries including SaaS, e-commerce, professional services, and real estate</li>
+        <li>Develop and execute comprehensive, integrated marketing strategies encompassing SEO, SEM, Google Ads, Meta Ads (Facebook &amp; Instagram), content marketing, email campaigns, and social media marketing</li>
+        <li>Build end-to-end AI-powered automation workflows using <strong>Make.com, Zapier, OpenAI (GPT-4), and Claude</strong> — automating lead scoring, CRM updates, email sequences, social media scheduling, and reporting pipelines, reducing manual marketing operations by <span class="metric">60%</span></li>
+        <li>Design and implement prompt engineering systems and AI agents for content generation, customer segmentation, and campaign optimization</li>
+        <li>Lead market research and consumer behavior analysis to identify trends, competitive positioning, and growth opportunities for each client</li>
+        <li>Manage and optimize paid media budgets totaling <span class="metric">$50K+/month</span> across Google Ads and Meta Ads, achieving average <span class="metric">4.2x ROAS</span></li>
+        <li>Create and oversee brand strategies that enhance brand awareness, ensure brand consistency across all touchpoints, and build long-term brand equity</li>
+        <li>Conduct Google Business Profile optimization and Local SEO strategies, increasing local search visibility by <span class="metric">150%</span> for service-based businesses in the GTA</li>
+        <li>Collaborate with executive teams to align marketing strategies with business objectives, present performance reports, and make data-driven recommendations</li>
+        <li>Manage API integrations between marketing platforms, CRMs (HubSpot, GoHighLevel), analytics tools, and automation systems</li>
+      </ul>
+    </div>
+
+    <!-- Role 2: 2022–2024 -->
+    <div class="entry">
+      <div class="entry-row">
+        <span class="entry-title">Digital Marketing Manager &amp; Brand Strategist</span>
+        <span class="entry-date">Mar 2022 – Dec 2023</span>
+      </div>
+      <div class="entry-org">Creative Digital Agency — Multi-Client Portfolio</div>
+      <div class="entry-loc">North York / Toronto, Ontario, Canada (On-Site &amp; Hybrid)</div>
+      <ul class="bullets">
+        <li>Led integrated, multi-channel digital marketing campaigns for <span class="metric">15+</span> clients across e-commerce, hospitality, real estate, construction, and professional services sectors</li>
+        <li>Managed and mentored a cross-functional team of designers, developers, and content creators, coordinating with external agencies and vendors to deliver projects on time and on budget</li>
+        <li>Developed SEO strategies (technical SEO, on-page optimization, content planning, link building) resulting in <span class="metric">200%+</span> average organic traffic growth within 6 months</li>
+        <li>Designed and launched <span class="metric">30+</span> websites and e-commerce stores using <strong>WordPress (Elementor, Divi), Shopify, and Wix Studio</strong>, optimizing for conversion rate, mobile responsiveness, and UX/UI best practices</li>
+        <li>Created and managed Google Ads (Search, Display, Shopping, YouTube) and Meta Ads (Facebook, Instagram) campaigns with combined monthly spend of <span class="metric">$30K+</span></li>
+        <li>Built marketing automation systems using Make.com and Zapier, integrating email marketing (Mailchimp, ActiveCampaign), CRM, and lead capture workflows</li>
+        <li>Produced social media content strategies and managed Instagram, Facebook, LinkedIn, TikTok, and YouTube accounts, growing combined follower bases by <span class="metric">300%</span></li>
+        <li>Delivered monthly performance reports using Google Analytics (GA4), Google Search Console, SEMrush, and custom dashboards, translating data into actionable growth strategies</li>
+        <li>Stewarded brand consistency across all marketing materials, ensuring tone, creative quality, and brand standards across touchpoints</li>
+        <li>Filmed, edited, and produced video content for social media campaigns including Instagram Reels, TikTok, and YouTube Shorts</li>
+      </ul>
+    </div>
+
+    <!-- Role 3: 2020–2022 -->
+    <div class="entry">
+      <div class="entry-row">
+        <span class="entry-title">Senior Digital Marketing Specialist &amp; Web Designer</span>
+        <span class="entry-date">Jan 2020 – Feb 2022</span>
+      </div>
+      <div class="entry-org">Freelance &amp; Contract — Diverse Client Base</div>
+      <div class="entry-loc">Remote — Canada &amp; International</div>
+      <ul class="bullets">
+        <li>Provided full-service digital marketing consulting to <span class="metric">20+</span> SMBs remotely, covering strategy, execution, and performance reporting across all digital channels</li>
+        <li>Designed and developed <span class="metric">40+</span> responsive websites using WordPress, Shopify, and custom solutions, implementing SEO best practices, accessibility standards, and performance optimization</li>
+        <li>Managed Google Ads PPC campaigns with monthly budgets of <span class="metric">$5K–$20K</span>, consistently reducing cost-per-acquisition by <span class="metric">35%</span> through A/B testing and audience optimization</li>
+        <li>Created comprehensive brand identity packages including logos, style guides, marketing collateral, social media templates, and print materials using Adobe Creative Suite, Figma, and Canva</li>
+        <li>Developed and executed email marketing campaigns (Mailchimp, HubSpot) with automated nurture sequences, achieving <span class="metric">28%</span> average open rates and <span class="metric">4.5%</span> click-through rates</li>
+        <li>Built and managed Google Business Profiles for local businesses, implementing Local SEO strategies that drove <span class="metric">3x</span> increase in Google Maps visibility and local search inquiries</li>
+        <li>Managed social media marketing across Instagram, Facebook, LinkedIn, and Pinterest, creating content calendars, scheduling posts, and analyzing engagement metrics using Hootsuite and Buffer</li>
+        <li>Provided UI/UX design services, creating wireframes, prototypes, and user flows in Figma for web and mobile applications</li>
+      </ul>
+    </div>
+
+    <!-- Role 4: 2018–2020 -->
+    <div class="entry">
+      <div class="entry-row">
+        <span class="entry-title">Digital Marketing Coordinator &amp; Graphic Designer</span>
+        <span class="entry-date">Jun 2018 – Dec 2019</span>
+      </div>
+      <div class="entry-org">Marketing Agency — Small &amp; Medium Business Clients</div>
+      <div class="entry-loc">Remote — Contract &amp; Freelance</div>
+      <ul class="bullets">
+        <li>Executed digital marketing campaigns across Google Ads, Facebook Ads, and Instagram Ads for <span class="metric">10+</span> clients in retail, food &amp; beverage, health, and professional services</li>
+        <li>Designed marketing materials including social media graphics, website banners, brochures, flyers, and email templates using Adobe Photoshop, Illustrator, InDesign, and Canva</li>
+        <li>Built and maintained WordPress websites, performing regular updates, plugin management, security, and performance optimization</li>
+        <li>Conducted keyword research and implemented on-page SEO optimizations, increasing organic traffic by <span class="metric">80%</span> for key client accounts</li>
+        <li>Managed client social media accounts, creating weekly content calendars, copywriting posts, and monitoring community engagement</li>
+        <li>Coordinated with photographers and videographers for content production, editing video for social media platforms</li>
+        <li>Set up and managed email marketing campaigns using Mailchimp, segmenting audiences and tracking performance metrics</li>
+      </ul>
+    </div>
+
+    <!-- Role 5: 2016–2018 -->
+    <div class="entry">
+      <div class="entry-row">
+        <span class="entry-title">Junior Digital Marketing Specialist &amp; Web Designer</span>
+        <span class="entry-date">2016 – May 2018</span>
+      </div>
+      <div class="entry-org">Freelance — Building Portfolio &amp; Client Base</div>
+      <div class="entry-loc">Remote</div>
+      <ul class="bullets">
+        <li>Launched freelance digital marketing and web design practice, acquiring first <span class="metric">15+</span> clients through networking and referrals</li>
+        <li>Designed and developed responsive WordPress websites with custom themes, page builders (Elementor, Divi), and e-commerce functionality (WooCommerce)</li>
+        <li>Created brand identities including logo design, color systems, typography, and brand guidelines for startups and small businesses</li>
+        <li>Managed organic social media marketing on Instagram, Facebook, and LinkedIn, growing client engagement through content strategy and community management</li>
+        <li>Implemented basic SEO fundamentals including meta optimization, site speed improvements, and Google Analytics/Search Console setup</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════ CORE COMPETENCIES ═══════════ -->
+  <section class="section">
+    <div class="section-title">Core Competencies</div>
+    <div class="skills-section">
+      <div>
+        <div class="skill-cat">Marketing Strategy &amp; Leadership</div>
+        <div class="skill-items">Fractional CMO, Marketing Strategy, Brand Strategy, Growth Marketing, Go-to-Market Strategy, Market Research, Consumer Behavior Analysis, Competitive Analysis, Marketing Budget Management, Client Relationship Management, Stakeholder Communication, Cross-Functional Team Leadership</div>
+      </div>
+      <div>
+        <div class="skill-cat">Paid Media &amp; Performance Marketing</div>
+        <div class="skill-items">Google Ads (Search, Display, Shopping, YouTube, Performance Max), Meta Ads (Facebook Ads, Instagram Ads), PPC Management, Retargeting, Conversion Rate Optimization (CRO), A/B Testing, ROAS Optimization, Campaign Analytics</div>
+      </div>
+      <div>
+        <div class="skill-cat">SEO &amp; Content Marketing</div>
+        <div class="skill-items">Search Engine Optimization (SEO), Technical SEO, On-Page SEO, Off-Page SEO, Local SEO, Google Business Profile Optimization, Content Strategy, Content Marketing, Blog Writing, Copywriting, Keyword Research, Link Building</div>
+      </div>
+      <div>
+        <div class="skill-cat">Social Media &amp; Content Creation</div>
+        <div class="skill-items">Social Media Management, Social Media Marketing, Instagram Marketing, Facebook Marketing, LinkedIn Marketing, TikTok Marketing, YouTube, Content Creation, Video Production, Video Editing, Graphic Design, Photography</div>
+      </div>
+      <div>
+        <div class="skill-cat">Web Design &amp; Development</div>
+        <div class="skill-items">WordPress, Elementor, Divi, Shopify, WooCommerce, Wix Studio, UI Design, UX Design, Responsive Web Design, Landing Page Optimization, E-Commerce, Website Development</div>
+      </div>
+      <div>
+        <div class="skill-cat">AI, Automation &amp; MarTech</div>
+        <div class="skill-items">Marketing Automation, Make.com (Integromat), Zapier, OpenAI (GPT-4), Claude AI, Prompt Engineering, AI Agents, Business Process Automation, Workflow Automation, API Integrations, CRM Automation, Lead Scoring Automation</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════ TOOLS & PLATFORMS ═══════════ -->
+  <section class="section">
+    <div class="section-title">Tools &amp; Platforms</div>
+    <p class="tools-line">
+      <strong>Advertising:</strong> Google Ads, Meta Business Suite, Google Analytics (GA4), Google Tag Manager, Google Search Console, SEMrush, Ahrefs, Moz, Hotjar<br>
+      <strong>Web &amp; E-Commerce:</strong> WordPress, Elementor, Divi, Shopify, WooCommerce, Wix Studio, Webflow, HTML/CSS<br>
+      <strong>Design &amp; Video:</strong> Adobe Photoshop, Adobe Illustrator, Adobe InDesign, Adobe Premiere Pro, Figma, Canva, CapCut, DaVinci Resolve<br>
+      <strong>Automation &amp; AI:</strong> Make.com, Zapier, OpenAI API, Claude, n8n, GoHighLevel, ActiveCampaign<br>
+      <strong>CRM &amp; Email:</strong> HubSpot, Mailchimp, ActiveCampaign, GoHighLevel, Klaviyo<br>
+      <strong>Social Media:</strong> Hootsuite, Buffer, Later, Meta Creator Studio, LinkedIn Campaign Manager<br>
+      <strong>Project Management:</strong> Notion, Asana, Trello, Monday.com, Slack, ClickUp
+    </p>
+  </section>
+
+  <!-- ═══════════ CERTIFICATIONS ═══════════ -->
+  <section class="section">
+    <div class="section-title">Certifications &amp; Training</div>
+    <div class="cert-item"><span class="cert-name">Google Ads Certification</span> — <span class="cert-org">Google (Search, Display, Video, Shopping)</span></div>
+    <div class="cert-item"><span class="cert-name">Google Analytics Certification</span> — <span class="cert-org">Google</span></div>
+    <div class="cert-item"><span class="cert-name">HubSpot Inbound Marketing Certification</span> — <span class="cert-org">HubSpot Academy</span></div>
+    <div class="cert-item"><span class="cert-name">Meta Blueprint Certification</span> — <span class="cert-org">Meta (Facebook &amp; Instagram Advertising)</span></div>
+    <div class="cert-item"><span class="cert-name">SEO Specialization</span> — <span class="cert-org">SEMrush Academy</span></div>
+    <div class="cert-item"><span class="cert-name">Shopify Partner Certification</span> — <span class="cert-org">Shopify</span></div>
+    <div class="cert-item"><span class="cert-name">WordPress Development</span> — <span class="cert-org">Continuous Professional Development</span></div>
+    <div class="cert-item"><span class="cert-name">AI &amp; Prompt Engineering</span> — <span class="cert-org">OpenAI, Anthropic Ecosystem</span></div>
+  </section>
+
+  <!-- ═══════════ EDUCATION ═══════════ -->
+  <section class="section">
+    <div class="section-title">Education</div>
+    <div class="cert-item"><span class="cert-name">Bachelor's Degree in Marketing / Business Administration</span></div>
+    <div class="cert-item" style="font-size:0.78rem;color:var(--text-secondary);">Supplemented by 8+ years of continuous professional development, industry certifications, and hands-on experience across all facets of digital marketing, design, and technology.</div>
+  </section>
+
+  <!-- ═══════════ ADDITIONAL ═══════════ -->
+  <section class="section">
+    <div class="section-title">Additional Information</div>
+    <ul class="bullets">
+      <li><strong>Location:</strong> Richmond Hill, Ontario, Canada — Available for on-site roles in Toronto, North York, Markham, Vaughan, Mississauga, Scarborough, Aurora, Newmarket, and the Greater Toronto Area (GTA)</li>
+      <li><strong>Remote:</strong> Fully equipped for remote work anywhere in Canada with proven track record of remote collaboration and client management</li>
+      <li><strong>Availability:</strong> Part-Time, Contract, Freelance, Consulting, Fractional, Project-Based, Temporary</li>
+      <li><strong>Languages:</strong> English (Fluent), Persian / Farsi (Native)</li>
+      <li><strong>Work Authorization:</strong> Authorized to work in Canada</li>
+    </ul>
+  </section>
+
+</div>
