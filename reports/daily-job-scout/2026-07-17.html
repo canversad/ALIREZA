@@ -1,0 +1,973 @@
+<title>Daily Canada Jobs & Freelance Opportunities — July 17, 2026</title>
+<style>
+  :root {
+    --bg: #F5F2EC;
+    --bg-card: #FFFFFF;
+    --bg-card-alt: #F0EDE6;
+    --text: #2E3138;
+    --text-muted: #6B6E75;
+    --text-heading: #1C2536;
+    --accent: #C4923B;
+    --accent-light: #F3E8D4;
+    --teal: #4A7C72;
+    --teal-light: #D9EEEA;
+    --score-high: #3A8C5C;
+    --score-mid: #C4923B;
+    --border: #DDD8CF;
+    --shadow: rgba(28,37,54,0.06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #12161E;
+      --bg-card: #1A1F2A;
+      --bg-card-alt: #1F2533;
+      --text: #D5D1CA;
+      --text-muted: #8A8D94;
+      --text-heading: #E8E4DD;
+      --accent: #D4A34B;
+      --accent-light: #2A2318;
+      --teal: #6AAFA3;
+      --teal-light: #1A2C29;
+      --score-high: #5BB87A;
+      --score-mid: #D4A34B;
+      --border: #2A2F3A;
+      --shadow: rgba(0,0,0,0.25);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #12161E;
+    --bg-card: #1A1F2A;
+    --bg-card-alt: #1F2533;
+    --text: #D5D1CA;
+    --text-muted: #8A8D94;
+    --text-heading: #E8E4DD;
+    --accent: #D4A34B;
+    --accent-light: #2A2318;
+    --teal: #6AAFA3;
+    --teal-light: #1A2C29;
+    --score-high: #5BB87A;
+    --score-mid: #D4A34B;
+    --border: #2A2F3A;
+    --shadow: rgba(0,0,0,0.25);
+  }
+  :root[data-theme="light"] {
+    --bg: #F5F2EC;
+    --bg-card: #FFFFFF;
+    --bg-card-alt: #F0EDE6;
+    --text: #2E3138;
+    --text-muted: #6B6E75;
+    --text-heading: #1C2536;
+    --accent: #C4923B;
+    --accent-light: #F3E8D4;
+    --teal: #4A7C72;
+    --teal-light: #D9EEEA;
+    --score-high: #3A8C5C;
+    --score-mid: #C4923B;
+    --border: #DDD8CF;
+    --shadow: rgba(28,37,54,0.06);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .report {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  /* ── Header ── */
+  .report-header {
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .report-eyebrow {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.35rem;
+  }
+  .report-title {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(1.6rem, 4vw, 2.1rem);
+    font-weight: 700;
+    color: var(--text-heading);
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+  .report-date {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 0.4rem;
+  }
+
+  /* ── Stats strip ── */
+  .stats-strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+  }
+  .stat-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1rem 1.1rem;
+    box-shadow: 0 1px 3px var(--shadow);
+  }
+  .stat-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.2rem;
+  }
+  .stat-value {
+    font-family: 'SF Mono', 'Cascadia Code', 'Fira Code', monospace;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-heading);
+    font-variant-numeric: tabular-nums;
+  }
+  .stat-value.accent { color: var(--accent); }
+  .stat-value.teal { color: var(--teal); }
+
+  /* ── Section headings ── */
+  .section-heading {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-heading);
+    margin: 2.5rem 0 1.25rem;
+    text-wrap: balance;
+  }
+  .section-heading .num {
+    color: var(--accent);
+    margin-right: 0.15em;
+  }
+
+  /* ── Opportunity cards ── */
+  .opp-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 1.25rem;
+    box-shadow: 0 1px 4px var(--shadow);
+    display: grid;
+    grid-template-columns: 4px 1fr;
+    overflow: hidden;
+  }
+  .opp-score-bar {
+    border-radius: 8px 0 0 8px;
+  }
+  .opp-score-bar.high { background: var(--score-high); }
+  .opp-score-bar.mid { background: var(--score-mid); }
+
+  .opp-body {
+    padding: 1.25rem 1.4rem;
+  }
+  .opp-rank {
+    font-family: 'SF Mono', 'Cascadia Code', monospace;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+  }
+  .opp-title {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-heading);
+    line-height: 1.3;
+    margin-bottom: 0.15rem;
+  }
+  .opp-company {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .opp-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.9rem;
+  }
+  .tag {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 0.2rem 0.55rem;
+    border-radius: 3px;
+    text-transform: uppercase;
+  }
+  .tag.location { background: var(--teal-light); color: var(--teal); }
+  .tag.type { background: var(--accent-light); color: var(--accent); }
+  .tag.remote { background: var(--teal-light); color: var(--teal); }
+
+  .opp-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.4rem 1.5rem;
+    margin-bottom: 0.9rem;
+    font-size: 0.82rem;
+  }
+  .meta-label {
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+  .meta-value {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .opp-summary {
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: var(--text);
+    margin-bottom: 0.6rem;
+  }
+  .opp-summary strong {
+    color: var(--text-heading);
+  }
+
+  .opp-match {
+    background: var(--bg-card-alt);
+    border-radius: 4px;
+    padding: 0.7rem 0.9rem;
+    margin-bottom: 0.75rem;
+  }
+  .opp-match-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--teal);
+    margin-bottom: 0.2rem;
+  }
+  .opp-match p {
+    font-size: 0.82rem;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  .opp-pros-cons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.82rem;
+  }
+  .pros-label, .cons-label {
+    font-weight: 700;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.2rem;
+  }
+  .pros-label { color: var(--score-high); }
+  .cons-label { color: var(--accent); }
+  .pros-list, .cons-list {
+    list-style: none;
+    line-height: 1.5;
+  }
+
+  .opp-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.5rem;
+    padding-top: 0.65rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.82rem;
+  }
+  .score-badge {
+    font-family: 'SF Mono', 'Cascadia Code', monospace;
+    font-weight: 700;
+    font-size: 0.9rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .score-badge.high { color: var(--score-high); }
+  .score-badge.mid { color: var(--score-mid); }
+
+  .opp-link {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.82rem;
+  }
+  .opp-link:hover { text-decoration: underline; }
+
+  /* ── Best Opportunity & Strategy ── */
+  .best-opp {
+    background: var(--bg-card);
+    border: 2px solid var(--accent);
+    border-radius: 8px;
+    padding: 1.5rem 1.6rem;
+    margin: 2rem 0;
+    box-shadow: 0 2px 8px var(--shadow);
+  }
+  .best-opp-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+  }
+  .best-opp h3 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1.15rem;
+    color: var(--text-heading);
+    margin-bottom: 0.6rem;
+  }
+  .best-opp p {
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+
+  .strategy-section {
+    margin-top: 2rem;
+  }
+  .strategy-section h3 {
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 1.1rem;
+    color: var(--text-heading);
+    margin-bottom: 0.75rem;
+  }
+  .strategy-list {
+    list-style: none;
+    counter-reset: strat;
+  }
+  .strategy-list li {
+    counter-increment: strat;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.88rem;
+    line-height: 1.55;
+  }
+  .strategy-list li:last-child { border-bottom: none; }
+  .strategy-list li::before {
+    content: counter(strat) ".";
+    font-family: 'SF Mono', 'Cascadia Code', monospace;
+    font-weight: 700;
+    color: var(--accent);
+    margin-right: 0.5em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .report-footer {
+    margin-top: 3rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 560px) {
+    .opp-meta { grid-template-columns: 1fr; }
+    .opp-pros-cons { grid-template-columns: 1fr; }
+    .report { padding: 1.25rem 1rem 3rem; }
+  }
+</style>
+
+<div class="report">
+
+  <!-- Header -->
+  <header class="report-header">
+    <div class="report-eyebrow">AI Job Scout &middot; Daily Brief</div>
+    <h1 class="report-title">Canada Jobs &amp; Freelance Opportunities</h1>
+    <div class="report-date">Thursday, July 17, 2026 &middot; Richmond Hill, ON &middot; GTA + Remote Canada</div>
+  </header>
+
+  <!-- Stats -->
+  <div class="stats-strip">
+    <div class="stat-box">
+      <div class="stat-label">Opportunities Found</div>
+      <div class="stat-value">10</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Avg Match Score</div>
+      <div class="stat-value accent">82</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Remote Roles</div>
+      <div class="stat-value teal">7</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Contract / Freelance</div>
+      <div class="stat-value">8</div>
+    </div>
+  </div>
+
+  <!-- Top 10 -->
+  <h2 class="section-heading"><span class="num">&mdash;</span> Top 10 Opportunities</h2>
+
+  <!-- #1 -->
+  <div class="opp-card">
+    <div class="opp-score-bar high"></div>
+    <div class="opp-body">
+      <div class="opp-rank">#1</div>
+      <div class="opp-title">Fractional CMO for Startups</div>
+      <div class="opp-company">Shiny &middot; Fractional Executive Network</div>
+      <div class="opp-tags">
+        <span class="tag location">Toronto</span>
+        <span class="tag remote">Remote / WFH</span>
+        <span class="tag type">Fractional</span>
+      </div>
+      <div class="opp-meta">
+        <div><span class="meta-label">Pay:</span> <span class="meta-value">$100 &ndash; $500/hr ($100K &ndash; $400K/yr)</span></div>
+        <div><span class="meta-label">Posted:</span> <span class="meta-value">5 days ago</span></div>
+        <div><span class="meta-label">Deadline:</span> <span class="meta-value">August 13, 2026</span></div>
+        <div><span class="meta-label">Experience:</span> <span class="meta-value">Senior marketing leadership</span></div>
+      </div>
+      <div class="opp-summary">
+        Join a global network of fractional executives matched with startups and SMBs. Lead comprehensive marketing strategies, oversee <strong>SEO, SEM, content marketing, email campaigns, and social media</strong>. Conduct market research and brand positioning for multiple clients.
+      </div>
+      <div class="opp-match">
+        <div class="opp-match-label">Why it matches</div>
+        <p>Your 8+ years spanning digital marketing, SEO, Google Ads, content strategy, social media, and AI automation align perfectly with the strategic CMO scope. Remote flexibility and project-based structure fit your target work style.</p>
+      </div>
+      <div class="opp-pros-cons">
+        <div>
+          <div class="pros-label">Pros</div>
+          <ul class="pros-list">
+            <li>+ Highest earning potential</li>
+            <li>+ Fully remote</li>
+            <li>+ Multi-client variety</li>
+            <li>+ Network access</li>
+          </ul>
+        </div>
+        <div>
+          <div class="cons-label">Cons</div>
+          <ul class="cons-list">
+            <li>- Competitive applicant pool</li>
+            <li>- Revenue depends on client match</li>
+            <li>- Requires proven CMO track record</li>
+          </ul>
+        </div>
+      </div>
+      <div class="opp-footer">
+        <span class="score-badge high">92/100</span>
+        <span class="meta-label">Competition: Medium</span>
+        <span class="meta-label">Difficulty: Medium</span>
+        <a class="opp-link" href="https://useshiny.com/job/fractional-cmo-for-startups-toronto-wfh-5/" target="_blank" rel="noopener">Apply on Shiny &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- #2 -->
+  <div class="opp-card">
+    <div class="opp-score-bar high"></div>
+    <div class="opp-body">
+      <div class="opp-rank">#2</div>
+      <div class="opp-title">Manager, Digital Marketing (12-Month Contract)</div>
+      <div class="opp-company">Mattamy Homes &middot; North America's Largest Family-Owned Homebuilder</div>
+      <div class="opp-tags">
+        <span class="tag location">Toronto, ON</span>
+        <span class="tag type">12-Month Contract</span>
+      </div>
+      <div class="opp-meta">
+        <div><span class="meta-label">Salary:</span> <span class="meta-value">$85,000 &ndash; $130,000/yr</span></div>
+        <div><span class="meta-label">Arrangement:</span> <span class="meta-value">Hybrid (4 days/week in office)</span></div>
+        <div><span class="meta-label">Skills:</span> <span class="meta-value">SEO, SEM, brand strategy, multi-channel</span></div>
+        <div><span class="meta-label">Experience:</span> <span class="meta-value">5+ years digital marketing</span></div>
+      </div>
+      <div class="opp-summary">
+        Lead integrated, multi-channel marketing strategies that build brand equity for Mattamy Homes across Canadian divisions. Partner with agencies and internal stakeholders, steward brand consistency across all touchpoints, and drive <strong>customer engagement throughout the homebuying journey</strong>.
+      </div>
+      <div class="opp-match">
+        <div class="opp-match-label">Why it matches</div>
+        <p>Your digital marketing breadth (SEO, ads, content, branding) plus project management experience maps directly to this role. Strong salary for a contract with potential extension/conversion.</p>
+      </div>
+      <div class="opp-pros-cons">
+        <div>
+          <div class="pros-label">Pros</div>
+          <ul class="pros-list">
+            <li>+ Excellent salary range</li>
+            <li>+ Major brand name</li>
+            <li>+ Possible conversion to permanent</li>
+          </ul>
+        </div>
+        <div>
+          <div class="cons-label">Cons</div>
+          <ul class="cons-list">
+            <li>- 4 days in-office (hybrid)</li>
+            <li>- Likely full-time hours</li>
+            <li>- Corporate structure</li>
+          </ul>
+        </div>
+      </div>
+      <div class="opp-footer">
+        <span class="score-badge high">88/100</span>
+        <span class="meta-label">Competition: High</span>
+        <span class="meta-label">Difficulty: Medium</span>
+        <a class="opp-link" href="https://ca.linkedin.com/jobs/view/manager-digital-marketing-12-month-contract-at-mattamy-homes-4398051608" target="_blank" rel="noopener">Apply on LinkedIn &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- #3 -->
+  <div class="opp-card">
+    <div class="opp-score-bar high"></div>
+    <div class="opp-body">
+      <div class="opp-rank">#3</div>
+      <div class="opp-title">Marketing &amp; Lead Generation Manager</div>
+      <div class="opp-company">Imperial Capital Developments &middot; Residential Construction</div>
+      <div class="opp-tags">
+        <span class="tag location">North York, GTA</span>
+        <span class="tag type">Part-Time / Contract</span>
+      </div>
+      <div class="opp-meta">
+        <div><span class="meta-label">Salary:</span> <span class="meta-value">Not disclosed</span></div>
+        <div><span class="meta-label">Arrangement:</span> <span class="meta-value">Hybrid &ndash; on-site for shoots &amp; events</span></div>
+        <div><span class="meta-label">Skills:</span> <span class="meta-value">Social media, video, content, branding, ads</span></div>
+        <div><span class="meta-label">Probation:</span> <span class="meta-value">3 months performance-based</span></div>
+      </div>
+      <div class="opp-summary">
+        Build marketing direction for a GTA renovation company. Create content across <strong>Instagram, TikTok, YouTube Shorts</strong>, plan and film project content, manage lead tracking, and test advertising channels. Monthly targets: 4 posts/week, 2 videos/week, 1 filming session/week.
+      </div>
+      <div class="opp-match">
+        <div class="opp-match-label">Why it matches</div>
+        <p>Combines your content creation, social media management, video production, graphic design, and local marketing skills. Part-time/contract structure and GTA location are ideal. You'd own the entire marketing function.</p>
+      </div>
+      <div class="opp-pros-cons">
+        <div>
+          <div class="pros-label">Pros</div>
+          <ul class="pros-list">
+            <li>+ Part-time available</li>
+            <li>+ GTA location (North York)</li>
+            <li>+ Full creative ownership</li>
+            <li>+ Perfect skill match</li>
+          </ul>
+        </div>
+        <div>
+          <div class="cons-label">Cons</div>
+          <ul class="cons-list">
+            <li>- Salary not disclosed</li>
+            <li>- Performance-based probation</li>
+            <li>- Requires on-site filming</li>
+          </ul>
+        </div>
+      </div>
+      <div class="opp-footer">
+        <span class="score-badge high">87/100</span>
+        <span class="meta-label">Competition: Low</span>
+        <span class="meta-label">Difficulty: Low</span>
+        <a class="opp-link" href="https://ca.indeed.com/Digital-Marketing-Specialist-jobs-in-Toronto,-ON" target="_blank" rel="noopener">Search on Indeed &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- #4 -->
+  <div class="opp-card">
+    <div class="opp-score-bar high"></div>
+    <div class="opp-body">
+      <div class="opp-rank">#4</div>
+      <div class="opp-title">Digital Marketing Specialist (12-Month Contract)</div>
+      <div class="opp-company">Top 5 Canadian Bank (via IFG Recruiting)</div>
+      <div class="opp-tags">
+        <span class="tag location">Toronto, ON</span>
+        <span class="tag type">12-Month Contract</span>
+        <span class="tag remote">Hybrid 1&ndash;2 days/wk</span>
+      </div>
+      <div class="opp-meta">
+        <div><span class="meta-label">Salary:</span> <span class="meta-value">$60K &ndash; $81K (estimated)</span></div>
+        <div><span class="meta-label">Extension:</span> <span class="meta-value">Possible extension/conversion</span></div>
+        <div><span class="meta-label">Skills:</span> <span class="meta-value">Email marketing, campaign execution, data analysis</span></div>
+        <div><span class="meta-label">Recruiter:</span> <span class="meta-value">IFG &ndash; International Financial Group</span></div>
+      </div>
+      <div class="opp-summary">
+        Execute email marketing campaigns for a major Canadian bank. Manage lead times with stakeholders, ensure quality control procedures, and <strong>analyze campaign performance through reporting and data pulls</strong>.
+      </div>
+      <div class="opp-match">
+        <div class="opp-match-label">Why it matches</div>
+        <p>Your marketing automation and email campaign experience, combined with data analysis and stakeholder management skills. Hybrid arrangement keeps most days remote. Strong brand on resume.</p>
+      </div>
+      <div class="opp-pros-cons">
+        <div>
+          <div class="pros-label">Pros</div>
+          <ul class="pros-list">
+            <li>+ Major bank &ndash; resume builder</li>
+            <li>+ Mostly remote (1&ndash;2 days in)</li>
+            <li>+ Conversion possible</li>
+          </ul>
+        </div>
+        <div>
+          <div class="cons-label">Cons</div>
+          <ul class="cons-list">
+            <li>- Corporate process-heavy</li>
+            <li>- Narrower scope (email only)</li>
+            <li>- Undisclosed salary</li>
+          </ul>
+        </div>
+      </div>
+      <div class="opp-footer">
+        <span class="score-badge high">84/100</span>
+        <span class="meta-label">Competition: Medium</span>
+        <span class="meta-label">Difficulty: Low</span>
+        <a class="opp-link" href="https://www.ifg-global.com/candidates/job-postings/digital-marketing-specialist-toronto-ontario-canada-27719.html" target="_blank" rel="noopener">Apply via IFG &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- #5 -->
+  <div class="opp-card">
+    <div class="opp-score-bar high"></div>
+    <div class="opp-body">
+      <div class="opp-rank">#5</div>
+      <div class="opp-title">Lead Management &amp; CRM Automation (Make.com)</div>
+      <div class="opp-company">Upwork Client &middot; Freelance Project</div>
+      <div class="opp-tags">
+        <span class="tag remote">Fully Remote</span>
+        <span class="tag type">Freelance &ndash; Fixed Price</span>
+      </div>
+      <div class="opp-meta">
+        <div><span class="meta-label">Budget:</span> <span class="meta-value">$150 fixed price</span></div>
+        <div><span class="meta-label">Posted:</span> <span class="meta-value">June 2026</span></div>
+        <div><span class="meta-label">Skills:</span> <span class="meta-value">Make.com, Google Sheets, email automation</span></div>
+        <div><span class="meta-label">Type:</span> <span class="meta-value">Contract-to-hire potential</span></div>
+      </div>
+      <div class="opp-summary">
+        Build a <strong>Make.com automation</strong> that captures leads from intake forms, scores them based on criteria, sends automated follow-up emails based on lead quality, and updates all data in a Google Sheets CRM automatically.
+      </div>
+      <div class="opp-match">
+        <div class="opp-match-label">Why it matches</div>
+        <p>Direct match for your Make.com, API integrations, and marketing automation skills. Quick project to build portfolio and client relationship with contract-to-hire potential.</p>
+      </div>
+      <div class="opp-pros-cons">
+        <div>
+          <div class="pros-label">Pros</div>
+          <ul class="pros-list">
+            <li>+ Perfect skill match (Make.com)</li>
+            <li>+ Quick to complete</li>
+            <li>+ Contract-to-hire</li>
+            <li>+ Fully remote</li>
+          </ul>
+        </div>
+        <div>
+          <div class="cons-label">Cons</div>
+          <ul class="cons-list">
+            <li>- Low initial budget ($150)</li>
+            <li>- Upwork fees apply</li>
+          </ul>
+        </div>
+      </div>
+      <div class="opp-footer">
+        <span class="score-badge high">83/100</span>
+        <span class="meta-label">Competition: Medium</span>
+        <span class="meta-label">Difficulty: Low</span>
+        <a class="opp-link" href="https://www.upwork.com/freelance-jobs/apply/Lead-Management-and-CRM-Automation-Make-com_~022062197199452122565/" target="_blank" rel="noopener">Apply on Upwork &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- #6 -->
+  <div class="opp-card">
+    <div class="opp-score-bar mid"></div>
+    <div class="opp-body">
+      <div class="opp-rank">#6</div>
+      <div class="opp-title">Senior SEO Strategist &ndash; Digital Agency (100% Remote)</div>
+      <div class="opp-company">Digital Agency (via LinkedIn) &middot; Large-Scale Brands</div>
+      <div class="opp-tags">
+        <span class="tag location">Canada</span>
+        <span class="tag remote">100% Remote</span>
+        <span class="tag type">Full-Time</span>
+      </div>
+      <div class="opp-meta">
+        <div><span class="meta-label">Salary:</span> <span class="meta-value">$80,000 &ndash; $90,000 + Benefits</span></div>
+        <div><span class="meta-label">Posted:</span> <span class="meta-value">3 days ago</span></div>
+        <div><span class="meta-label">Skills:</span> <span class="meta-value">SEO strategy, technical SEO, analytics, reporting</span></div>
+        <div><span class="meta-label">Clients:</span> <span class="meta-value">Large-scale brands</span></div>
+      </div>
+      <div class="opp-summary">
+        Lead SEO strategy for large-scale brands at a digital agency. Drive <strong>organic growth, technical audits, content optimization, and performance reporting</strong>. Work 100% remote anywhere in Canada.
+      </div>
+      <div class="opp-match">
+        <div class="opp-match-label">Why it matches</div>
+        <p>Your SEO and Local SEO expertise, combined with Google Analytics and content strategy skills. Fully remote and agency work means variety. Good salary with benefits.</p>
+      </div>
+      <div class="opp-pros-cons">
+        <div>
+          <div class="pros-label">Pros</div>
+          <ul class="pros-list">
+            <li>+ 100% remote</li>
+            <li>+ Good salary + benefits</li>
+            <li>+ Prestigious clients</li>
+          </ul>
+        </div>
+        <div>
+          <div class="cons-label">Cons</div>
+          <ul class="cons-list">
+            <li>- Full-time (not contract)</li>
+            <li>- SEO-only scope</li>
+            <li>- Posted 3 days ago &ndash; act fast</li>
+          </ul>
+        </div>
+      </div>
+      <div class="opp-footer">
+        <span class="score-badge mid">80/100</span>
+        <span class="meta-label">Competition: High</span>
+        <span class="meta-label">Difficulty: Medium</span>
+        <a class="opp-link" href="https://ca.linkedin.com/jobs/seo-remote-jobs" target="_blank" rel="noopener">Search on LinkedIn &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- #7 -->
+  <div class="opp-card">
+    <div class="opp-score-bar mid"></div>
+    <div class="opp-body">
+      <div class="opp-rank">#7</div>
+      <div class="opp-title">Freelance Seasonal Graphic Design Specialist (Social Media)</div>
+      <div class="opp-company">Retail/Consumer Brand &middot; Etobicoke</div>
+      <div class="opp-tags">
+        <span class="tag location">Etobicoke, GTA</span>
+        <span class="tag type">9-Month Contract</span>
+      </div>
+      <div class="opp-meta">
+        <div><span class="meta-label">Rate:</span> <span class="meta-value">$26 &ndash; $37/hr (estimated)</span></div>
+        <div><span class="meta-label">Duration:</span> <span class="meta-value">9 months (seasonal)</span></div>
+        <div><span class="meta-label">Skills:</span> <span class="meta-value">Graphic design, social media assets, brand guidelines</span></div>
+        <div><span class="meta-label">Tools:</span> <span class="meta-value">Adobe Creative Suite, Canva, Figma</span></div>
+      </div>
+      <div class="opp-summary">
+        Create <strong>social media graphics, campaign visuals, and branded content</strong> for seasonal marketing campaigns. Work within established brand guidelines while bringing creative ideas to engaging social content.
+      </div>
+      <div class="opp-match">
+        <div class="opp-match-label">Why it matches</div>
+        <p>Combines your graphic design and social media content creation skills. Seasonal contract keeps schedule flexible. GTA location works for in-person collaboration when needed.</p>
+      </div>
+      <div class="opp-pros-cons">
+        <div>
+          <div class="pros-label">Pros</div>
+          <ul class="pros-list">
+            <li>+ GTA-based</li>
+            <li>+ Creative work</li>
+            <li>+ Defined 9-month scope</li>
+          </ul>
+        </div>
+        <div>
+          <div class="cons-label">Cons</div>
+          <ul class="cons-list">
+            <li>- Moderate hourly rate</li>
+            <li>- Seasonal/temporary</li>
+            <li>- Narrow scope (design only)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="opp-footer">
+        <span class="score-badge mid">78/100</span>
+        <span class="meta-label">Competition: Low</span>
+        <span class="meta-label">Difficulty: Low</span>
+        <a class="opp-link" href="https://ca.indeed.com/q-freelance-designer-l-toronto,-on-jobs.html" target="_blank" rel="noopener">Search on Indeed &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- #8 -->
+  <div class="opp-card">
+    <div class="opp-score-bar mid"></div>
+    <div class="opp-body">
+      <div class="opp-rank">#8</div>
+      <div class="opp-title">Freelance WordPress Website Designer (Remote)</div>
+      <div class="opp-company">Various Clients &middot; Freelance Platforms</div>
+      <div class="opp-tags">
+        <span class="tag remote">Fully Remote</span>
+        <span class="tag type">Freelance</span>
+      </div>
+      <div class="opp-meta">
+        <div><span class="meta-label">Rate:</span> <span class="meta-value">$25 &ndash; $49/hr</span></div>
+        <div><span class="meta-label">Skills:</span> <span class="meta-value">WordPress, Divi, Elementor, Shopify (plus)</span></div>
+        <div><span class="meta-label">Platforms:</span> <span class="meta-value">Upwork, Contra, Workhoppers</span></div>
+        <div><span class="meta-label">Type:</span> <span class="meta-value">Project-based / Ongoing</span></div>
+      </div>
+      <div class="opp-summary">
+        Build and launch WordPress websites using <strong>Divi and Elementor page builders</strong>. Multiple active opportunities across freelance platforms for responsive website design, with Shopify experience a valued plus.
+      </div>
+      <div class="opp-match">
+        <div class="opp-match-label">Why it matches</div>
+        <p>Your WordPress and Shopify expertise combined with UI/UX skills make you a strong fit. Remote and project-based structure allows stacking with other work. Can build toward recurring clients.</p>
+      </div>
+      <div class="opp-pros-cons">
+        <div>
+          <div class="pros-label">Pros</div>
+          <ul class="pros-list">
+            <li>+ Fully remote</li>
+            <li>+ Flexible schedule</li>
+            <li>+ Multiple platform options</li>
+          </ul>
+        </div>
+        <div>
+          <div class="cons-label">Cons</div>
+          <ul class="cons-list">
+            <li>- Competitive marketplace</li>
+            <li>- Variable income</li>
+            <li>- Platform fees</li>
+          </ul>
+        </div>
+      </div>
+      <div class="opp-footer">
+        <span class="score-badge mid">77/100</span>
+        <span class="meta-label">Competition: High</span>
+        <span class="meta-label">Difficulty: Low</span>
+        <a class="opp-link" href="https://www.upwork.com/hire/wordpress-developers/ca/toronto-on/" target="_blank" rel="noopener">Browse on Upwork &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- #9 -->
+  <div class="opp-card">
+    <div class="opp-score-bar mid"></div>
+    <div class="opp-body">
+      <div class="opp-rank">#9</div>
+      <div class="opp-title">Freelance PPC / Google Ads Specialist</div>
+      <div class="opp-company">Various SMBs &middot; GTA &amp; Ontario</div>
+      <div class="opp-tags">
+        <span class="tag location">Ontario</span>
+        <span class="tag remote">Remote Available</span>
+        <span class="tag type">Freelance / Consulting</span>
+      </div>
+      <div class="opp-meta">
+        <div><span class="meta-label">Rate:</span> <span class="meta-value">$58 &ndash; $100/hr (mid-level)</span></div>
+        <div><span class="meta-label">Platforms:</span> <span class="meta-value">Upwork, Freel.ca, Guru</span></div>
+        <div><span class="meta-label">Skills:</span> <span class="meta-value">Google Ads, Facebook Ads, conversion optimization</span></div>
+        <div><span class="meta-label">Engagement:</span> <span class="meta-value">Month-to-month retainer</span></div>
+      </div>
+      <div class="opp-summary">
+        Manage and optimize <strong>paid advertising campaigns across Google Ads, Facebook, and Instagram</strong> for SMBs. Provide audits, strategy, and ongoing management with month-to-month flexibility.
+      </div>
+      <div class="opp-match">
+        <div class="opp-match-label">Why it matches</div>
+        <p>Your Google Ads, Meta Ads, and performance marketing experience plus Google Business Profile expertise position you well. Strong hourly rates and month-to-month terms provide steady recurring income.</p>
+      </div>
+      <div class="opp-pros-cons">
+        <div>
+          <div class="pros-label">Pros</div>
+          <ul class="pros-list">
+            <li>+ Strong hourly rate</li>
+            <li>+ Recurring revenue model</li>
+            <li>+ Results-based retention</li>
+          </ul>
+        </div>
+        <div>
+          <div class="cons-label">Cons</div>
+          <ul class="cons-list">
+            <li>- Client acquisition needed</li>
+            <li>- Competitive market</li>
+            <li>- Variable workload</li>
+          </ul>
+        </div>
+      </div>
+      <div class="opp-footer">
+        <span class="score-badge mid">76/100</span>
+        <span class="meta-label">Competition: Medium</span>
+        <span class="meta-label">Difficulty: Low</span>
+        <a class="opp-link" href="https://freel.ca/services/ppc-specialist-for-google-ads" target="_blank" rel="noopener">Browse on Freel.ca &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- #10 -->
+  <div class="opp-card">
+    <div class="opp-score-bar mid"></div>
+    <div class="opp-body">
+      <div class="opp-rank">#10</div>
+      <div class="opp-title">Fractional Marketing Manager</div>
+      <div class="opp-company">GoFractional &middot; Toronto Network</div>
+      <div class="opp-tags">
+        <span class="tag location">Toronto</span>
+        <span class="tag remote">Remote Available</span>
+        <span class="tag type">Fractional / Part-Time</span>
+      </div>
+      <div class="opp-meta">
+        <div><span class="meta-label">Pay:</span> <span class="meta-value">$54+/hr (varies by engagement)</span></div>
+        <div><span class="meta-label">Network:</span> <span class="meta-value">99 fractional jobs in Toronto area</span></div>
+        <div><span class="meta-label">Skills:</span> <span class="meta-value">Marketing leadership, strategy, team management</span></div>
+        <div><span class="meta-label">Type:</span> <span class="meta-value">Part-time ongoing</span></div>
+      </div>
+      <div class="opp-summary">
+        Join a curated network of <strong>fractional executives matched with vetted companies</strong>. Senior fractional and interim marketing positions across multiple Toronto-area businesses needing part-time marketing leadership.
+      </div>
+      <div class="opp-match">
+        <div class="opp-match-label">Why it matches</div>
+        <p>Your broad marketing and project management experience fits the fractional model. Platform provides client sourcing, reducing your business development overhead. Toronto-based network for local connections.</p>
+      </div>
+      <div class="opp-pros-cons">
+        <div>
+          <div class="pros-label">Pros</div>
+          <ul class="pros-list">
+            <li>+ Vetted client base</li>
+            <li>+ Part-time flexibility</li>
+            <li>+ Toronto network</li>
+          </ul>
+        </div>
+        <div>
+          <div class="cons-label">Cons</div>
+          <ul class="cons-list">
+            <li>- Platform takes a cut</li>
+            <li>- Competitive acceptance</li>
+            <li>- Variable engagement length</li>
+          </ul>
+        </div>
+      </div>
+      <div class="opp-footer">
+        <span class="score-badge mid">74/100</span>
+        <span class="meta-label">Competition: Medium</span>
+        <span class="meta-label">Difficulty: Medium</span>
+        <a class="opp-link" href="https://www.gofractional.com/jobs/toronto" target="_blank" rel="noopener">Browse on GoFractional &rarr;</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Best Opportunity -->
+  <div class="best-opp">
+    <div class="best-opp-label">Best Opportunity of the Day</div>
+    <h3>#3 &mdash; Marketing &amp; Lead Generation Manager at Imperial Capital Developments</h3>
+    <p>While the Fractional CMO role (#1) has the highest earning potential, the Imperial Capital position offers the best balance of <strong>immediate actionability and profile match</strong>. It's part-time/contract, located in North York (GTA), has low competition, and needs exactly the skills you bring: social media content creation, video production, graphic design, branding, and lead generation. The role lets you own the entire marketing function from strategy to execution &mdash; building a portfolio piece while maintaining flexibility for other projects. The low application difficulty and small company size mean you're likely to get a response quickly.</p>
+  </div>
+
+  <!-- Immediate Recommendations -->
+  <div class="strategy-section">
+    <h3>Immediate Recommendations &mdash; Apply Today</h3>
+    <ol class="strategy-list">
+      <li><strong>Imperial Capital Developments (#3)</strong> &mdash; Best match-to-effort ratio. Apply directly through Indeed. Prepare 2&ndash;3 examples of social media content you've created for local businesses, especially anything in construction, real estate, or home improvement.</li>
+      <li><strong>Mattamy Homes (#2)</strong> &mdash; Highest salary potential in a traditional role. Apply through LinkedIn and tailor your resume to emphasize multi-channel campaign management, brand stewardship, and agency collaboration. Mention any real estate or construction marketing experience.</li>
+      <li><strong>Upwork Make.com Project (#5)</strong> &mdash; Quick win to build momentum. Submit a proposal showcasing your Make.com expertise. This can be completed in a day or two and establishes your AI automation credibility on the platform.</li>
+    </ol>
+  </div>
+
+  <!-- Application Strategy -->
+  <div class="strategy-section">
+    <h3>Application Strategy</h3>
+    <ol class="strategy-list">
+      <li><strong>Resume Version A (Marketing Leadership):</strong> Lead with digital marketing strategy, brand management, and multi-channel campaign experience. Emphasize team coordination and stakeholder management. Target this at Mattamy Homes (#2), the bank contract (#4), and fractional roles (#1, #10).</li>
+      <li><strong>Resume Version B (Creative &amp; Content):</strong> Lead with content creation, social media management, video production, and graphic design. Include portfolio links to your best visual work. Target this at Imperial Capital (#3) and the seasonal design role (#7).</li>
+      <li><strong>Portfolio Tip:</strong> For today's applications, create a one-page case study showing a local business you helped grow through social media and digital marketing. Include before/after metrics if available. This single piece supports applications #2, #3, and #4.</li>
+      <li><strong>AI Automation Angle:</strong> For the Upwork project (#5) and future AI automation gigs, prepare a short Loom video demonstrating a Make.com workflow you've built. This immediately differentiates you from text-only proposals and can be reused across platforms.</li>
+      <li><strong>Fractional Positioning:</strong> For Shiny (#1) and GoFractional (#10), frame your 8+ years as "operating as a one-person marketing department" for multiple clients &mdash; this is essentially what a fractional CMO does, just without the title. Emphasize breadth across SEO, ads, content, branding, and automation.</li>
+    </ol>
+  </div>
+
+  <footer class="report-footer">
+    AI Job Scout &middot; Daily Brief &middot; July 17, 2026<br>
+    Generated for Alireza &middot; Richmond Hill, ON &middot; alirezaassar.ca@gmail.com<br>
+    Opportunities verified at time of search. Apply promptly &mdash; listings may expire.
+  </footer>
+
+</div>
